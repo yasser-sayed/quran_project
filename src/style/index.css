@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  transition-duration: 300ms;
+  font-family: "Short Stack", cursive;
+}
+
+.quran-text {
+  font-family: "Amiri", serif;
+}

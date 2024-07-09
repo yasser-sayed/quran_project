@@ -1,0 +1,124 @@
+{
+  "users": [
+    {
+      "id": "shi21h",
+      "firstName": "Hesham",
+      "lastName": "Khalil",
+      "userName": "Luka2023",
+      "email": "heshamkhalil1988@gmail.com",
+      "password": "123456",
+
+      "favList": []
+    },
+    {
+      "id": "6w43h",
+      "firstName": "rana",
+      "lastName": "fathy",
+      "userName": "rana2023",
+      "email": "rana@gmail.com",
+      "password": "12345",
+
+      "favList": []
+    },
+    {
+      "id": "sd535hb",
+      "firstName": "aseel",
+      "lastName": "hisham",
+      "userName": "asola",
+      "email": "aseel@gmail.com",
+      "password": "123456",
+
+      "favList": []
+    },
+    {
+      "id": "4QIa-U6",
+      "firstName": "yasser",
+      "lastName": "sayed",
+      "userName": "yasser-sayed",
+      "email": "yassersayed@gmail.com",
+      "password": "123456",
+
+      "favList": []
+    },
+    {
+      "id": "CHFLqTT",
+      "firstName": "sama ",
+      "lastName": "ahmed",
+      "userName": "sama-ahmed",
+      "email": "sama@gmail.com",
+      "password": "123456 ",
+
+      "favList": []
+    },
+    {
+      "id": "mFCwrNj",
+      "firstName": "ziad",
+      "lastName": "ahmed",
+      "userName": "ziad-ahmed",
+      "email": "ziad@gmail.com",
+      "password": "123456",
+
+      "favList": []
+    },
+    {
+      "id": "TwVqb08",
+      "firstName": "amira",
+      "lastName": "khaled",
+      "userName": "amira-khaled",
+      "email": "amira@gmail.com",
+      "password": "123456",
+
+      "favList": []
+    },
+    {
+      "id": "MpSFYZz",
+      "firstName": "ziad",
+      "lastName": "amir",
+      "userName": "amirr",
+      "email": "ziad-amir@gmail.com",
+      "password": "123456",
+
+      "favList": []
+    },
+    {
+      "id": "YJPid87",
+      "firstName": "neven",
+      "lastName": "shokry",
+      "userName": "neven-shokry",
+      "email": "neven@gmail.com",
+      "password": "123456",
+
+      "favList": []
+    },
+    {
+      "firstName": "tamer",
+      "lastName": "sa3eed",
+      "userName": "tamer-sa3eed",
+      "email": "tamer@gmail.com",
+      "password": "123456",
+
+      "id": "ym8L_DD",
+      "favList": []
+    },
+    {
+      "firstName": "tamara",
+      "lastName": "akmal",
+      "userName": "tamara-akmal",
+      "email": "tamara@gmail.com",
+      "password": "123456",
+
+      "id": "NQavbZZ",
+      "favList": []
+    },
+    {
+      "firstName": "gehad",
+      "lastName": "sayed",
+      "userName": "gahad-sayed",
+      "email": "gehadsayed@gmail.com",
+      "password": "123456",
+
+      "id": "ZvtaGmi",
+      "favList": []
+    }
+  ]
+}
