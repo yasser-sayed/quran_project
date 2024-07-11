@@ -7,7 +7,6 @@
       "userName": "Luka2023",
       "email": "heshamkhalil1988@gmail.com",
       "password": "123456",
-
       "favList": []
     },
     {
@@ -17,7 +16,6 @@
       "userName": "rana2023",
       "email": "rana@gmail.com",
       "password": "12345",
-
       "favList": []
     },
     {
@@ -27,7 +25,6 @@
       "userName": "asola",
       "email": "aseel@gmail.com",
       "password": "123456",
-
       "favList": []
     },
     {
@@ -37,7 +34,6 @@
       "userName": "yasser-sayed",
       "email": "yassersayed@gmail.com",
       "password": "123456",
-
       "favList": []
     },
     {
@@ -47,7 +43,6 @@
       "userName": "sama-ahmed",
       "email": "sama@gmail.com",
       "password": "123456 ",
-
       "favList": []
     },
     {
@@ -57,7 +52,6 @@
       "userName": "ziad-ahmed",
       "email": "ziad@gmail.com",
       "password": "123456",
-
       "favList": []
     },
     {
@@ -67,7 +61,6 @@
       "userName": "amira-khaled",
       "email": "amira@gmail.com",
       "password": "123456",
-
       "favList": []
     },
     {
@@ -77,7 +70,6 @@
       "userName": "amirr",
       "email": "ziad-amir@gmail.com",
       "password": "123456",
-
       "favList": []
     },
     {
@@ -87,7 +79,6 @@
       "userName": "neven-shokry",
       "email": "neven@gmail.com",
       "password": "123456",
-
       "favList": []
     },
     {
@@ -96,7 +87,6 @@
       "userName": "tamer-sa3eed",
       "email": "tamer@gmail.com",
       "password": "123456",
-
       "id": "ym8L_DD",
       "favList": []
     },
@@ -106,7 +96,6 @@
       "userName": "tamara-akmal",
       "email": "tamara@gmail.com",
       "password": "123456",
-
       "id": "NQavbZZ",
       "favList": []
     },
@@ -116,9 +105,17 @@
       "userName": "gahad-sayed",
       "email": "gehadsayed@gmail.com",
       "password": "123456",
-
       "id": "ZvtaGmi",
       "favList": []
+    },
+    {
+      "firstName": "ahmed",
+      "lastName": "morad",
+      "userName": "yasser-sayedD",
+      "email": "yassersayed952@gmail.com",
+      "password": "123456!",
+      "favList": [],
+      "id": "wX8WwER"
     }
   ]
 }

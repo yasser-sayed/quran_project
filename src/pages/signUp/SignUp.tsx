@@ -14,10 +14,57 @@ import {
   CardFooter,
   Text,
 } from "@chakra-ui/react";
-// import { FiEye, FiEyeOff } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { TSignUpSchema, signUpSchema } from "../../lib/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useAppDispatch, useAppSelector } from "../../state-management/hooks";
+import { getUsers } from "../../state-management/fetchingDataSlices/usersSlice";
+import { addUser } from "../../state-management/fetchingDataSlices/userApis";
 
 const SignUp = () => {
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors, isSubmitting },
+  } = useForm<TSignUpSchema>({ resolver: zodResolver(signUpSchema) });
+  const { users } = useAppSelector((state) => state.users);
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const onSubmit: SubmitHandler<TSignUpSchema> = async (data) => {
+    try {
+      await dispatch(getUsers()).unwrap();
+
+      const checkUser = users.find((user) => user.userName === data.userName);
+
+      if (!checkUser) {
+        try {
+          await dispatch(
+            addUser({
+              firstName: data.firstName,
+              lastName: data.lastName,
+              userName: data.userName,
+              email: data.email,
+              password: data.password,
+              favList: [],
+            })
+          ).unwrap();
+
+          navigate("/login");
+        } catch (err) {
+          setError("root", { message: err as string });
+        }
+      } else {
+        setError("userName", { message: "userName is already used" });
+      }
+    } catch (err) {
+      setError("root", { message: err as string });
+    }
+  };
+
   return (
     <Flex
       alignItems={"center"}
@@ -42,6 +89,7 @@ const SignUp = () => {
         <CardBody>
           <Flex
             as="form"
+            onSubmit={handleSubmit(onSubmit)}
             gap={"1.5rem"}
             width={"100%"}
             flexDirection={"column"}
@@ -56,33 +104,35 @@ const SignUp = () => {
               w={"100%"}
             >
               {/* first name  */}
-              <FormControl>
+              <FormControl isInvalid={!!errors.firstName}>
                 <FormLabel color="whitesmoke">first name</FormLabel>
                 <Input
+                  {...register("firstName")}
                   focusBorderColor="sec.500"
                   color="whitesmoke"
                   type="text"
                   placeholder="last name"
                 />
-                <FormHelperText color={"gray.300"}>
+                <FormHelperText hidden={!!errors.firstName} color={"gray.300"}>
                   enter your first name.
                 </FormHelperText>
-                <FormErrorMessage>Email is required.</FormErrorMessage>
+                <FormErrorMessage>{errors.firstName?.message}</FormErrorMessage>
               </FormControl>
 
               {/* last name  */}
-              <FormControl>
+              <FormControl isInvalid={!!errors.lastName}>
                 <FormLabel color="whitesmoke">last name</FormLabel>
                 <Input
+                  {...register("lastName")}
                   focusBorderColor="sec.500"
                   color="whitesmoke"
                   type="text"
                   placeholder="last name"
                 />
-                <FormHelperText color={"gray.300"}>
+                <FormHelperText hidden={!!errors.lastName} color={"gray.300"}>
                   enter your last name.
                 </FormHelperText>
-                <FormErrorMessage>Email is required.</FormErrorMessage>
+                <FormErrorMessage>{errors.lastName?.message}</FormErrorMessage>
               </FormControl>
             </Flex>
 
@@ -95,33 +145,35 @@ const SignUp = () => {
               w={"100%"}
             >
               {/* userName  */}
-              <FormControl>
+              <FormControl isInvalid={!!errors.userName}>
                 <FormLabel color="whitesmoke">username</FormLabel>
                 <Input
+                  {...register("userName")}
                   focusBorderColor="sec.500"
                   color="whitesmoke"
                   type="text"
                   placeholder="username"
                 />
-                <FormHelperText color={"gray.300"}>
+                <FormHelperText hidden={!!errors.userName} color={"gray.300"}>
                   enter your username.
                 </FormHelperText>
-                <FormErrorMessage>Email is required.</FormErrorMessage>
+                <FormErrorMessage>{errors.userName?.message}</FormErrorMessage>
               </FormControl>
 
               {/* email  */}
-              <FormControl>
+              <FormControl isInvalid={!!errors.email}>
                 <FormLabel color="whitesmoke">email</FormLabel>
                 <Input
+                  {...register("email")}
                   focusBorderColor="sec.500"
                   color="whitesmoke"
                   type="text"
                   placeholder="username"
                 />
-                <FormHelperText color={"gray.300"}>
+                <FormHelperText hidden={!!errors.email} color={"gray.300"}>
                   enter your email.
                 </FormHelperText>
-                <FormErrorMessage>Email is required.</FormErrorMessage>
+                <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
               </FormControl>
             </Flex>
 
@@ -134,41 +186,55 @@ const SignUp = () => {
               w={"100%"}
             >
               {/* password */}
-              <FormControl>
+              <FormControl isInvalid={!!errors.password}>
                 <FormLabel color="whitesmoke">Password</FormLabel>
                 <Input
+                  {...register("password")}
                   focusBorderColor="sec.500"
                   color="whitesmoke"
                   type="password"
                   placeholder="Password"
                 />
-                <FormHelperText color={"gray.300"}>
+                <FormHelperText hidden={!!errors.password} color={"gray.300"}>
                   password should be more than 5.
                 </FormHelperText>
-                <FormErrorMessage>password is required.</FormErrorMessage>
+                <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
               </FormControl>
 
               {/* confirm password */}
-              <FormControl>
+              <FormControl isInvalid={!!errors.confirmPassword}>
                 <FormLabel color="whitesmoke">confirm Password</FormLabel>
                 <Input
+                  {...register("confirmPassword")}
                   focusBorderColor="sec.500"
                   color="whitesmoke"
                   type="password"
                   placeholder="confirm Password"
                 />
-                <FormHelperText color={"gray.300"}>
+                <FormHelperText
+                  hidden={!!errors.confirmPassword}
+                  color={"gray.300"}
+                >
                   confirm your password.
                 </FormHelperText>
-                <FormErrorMessage>password is required.</FormErrorMessage>
+                <FormErrorMessage>
+                  {errors.confirmPassword?.message}
+                </FormErrorMessage>
               </FormControl>
             </Flex>
+
+            {/* root error */}
+
+            <FormControl isInvalid={!!errors.root}>
+              <FormErrorMessage>{errors.root?.message}</FormErrorMessage>
+            </FormControl>
 
             {/* sign Up */}
 
             <Button
-              // isLoading
-              loadingText="logging in"
+              type="submit"
+              isLoading={isSubmitting}
+              loadingText="signing up"
               colorScheme="sec"
               w={"100%"}
               rounded={9999}
