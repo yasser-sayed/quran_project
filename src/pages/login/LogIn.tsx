@@ -24,13 +24,12 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import { TLogInSchema, User, logInSchema } from "../../lib/types";
-import { useAppDispatch, useAppSelector } from "../../state-management/hooks";
+import { useAppDispatch } from "../../state-management/hooks";
 import { getUsers } from "../../state-management/fetchingDataSlices/usersSlice";
 import { setUser } from "../../state-management/userDetSlice/userDetSlice";
 
 const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { users } = useAppSelector((state) => state.users);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {
@@ -42,7 +41,7 @@ const LogIn = () => {
 
   const onSubmit: SubmitHandler<TLogInSchema> = async (data) => {
     try {
-      await dispatch(getUsers()).unwrap();
+      const users = await dispatch(getUsers()).unwrap();
 
       const userCheck: User | undefined = users.find(
         (user) => user.userName === data.userName

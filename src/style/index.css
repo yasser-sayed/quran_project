@@ -10,3 +10,13 @@
 .quran-text {
   font-family: "Amiri", serif;
 }
+
+/* width */
+::-webkit-scrollbar {
+  @apply bg-[#2A2A2A] w-[6px];
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply bg-[#1ebc4b] rounded-xl;
+}

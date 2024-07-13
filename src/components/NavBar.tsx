@@ -1,8 +1,24 @@
-import { Box, Button, Flex, Heading, IconButton } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuGroup,
+  MenuItem,
+  MenuList,
+} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { FaHome, FaSearch } from "react-icons/fa";
+import { CgProfile } from "react-icons/cg";
+import { useAppSelector } from "../state-management/hooks";
 
 const NavBar = () => {
+  const { user } = useAppSelector((state) => state.userDet);
+
   return (
     <Flex
       as="nav"
@@ -60,6 +76,7 @@ const NavBar = () => {
 
       {/* login and sign up */}
       <Flex
+        hidden={!!user}
         gap={"1rem"}
         px={"1rem"}
         rounded={9999}
@@ -87,6 +104,53 @@ const NavBar = () => {
         >
           LogIn
         </Button>
+      </Flex>
+
+      {/* Menu Select when User is login */}
+      <Flex hidden={!user}>
+        <Menu>
+          <MenuButton
+            as={IconButton}
+            icon={<CgProfile className="text-3xl" />}
+            variant={"text"}
+            aria-label="Options"
+          ></MenuButton>
+          <MenuList bg={"third"} borderColor={"main"}>
+            <MenuGroup title="optins">
+              <MenuItem
+                bg={"third"}
+                borderColor={"main"}
+                _hover={{ bg: "sec.600" }}
+              >
+                My Account
+              </MenuItem>
+              <MenuItem
+                bg={"third"}
+                borderColor={"main"}
+                _hover={{ bg: "sec.600" }}
+              >
+                Favouraties{" "}
+              </MenuItem>
+
+              <MenuItem
+                bg={"third"}
+                borderColor={"main"}
+                _hover={{ bg: "sec.600" }}
+              >
+                Settings{" "}
+              </MenuItem>
+              <MenuDivider color={"white"} />
+              <MenuItem
+                bg={"third"}
+                color={"red"}
+                borderColor={"main"}
+                _hover={{ bg: "sec.600", color: "white" }}
+              >
+                Log Out
+              </MenuItem>
+            </MenuGroup>
+          </MenuList>
+        </Menu>
       </Flex>
     </Flex>
   );

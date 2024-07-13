@@ -13,12 +13,19 @@ import {
   Button,
   CardFooter,
   Text,
+  Select,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
+  Checkbox,
 } from "@chakra-ui/react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { TSignUpSchema, signUpSchema } from "../../lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAppDispatch, useAppSelector } from "../../state-management/hooks";
+import { useAppDispatch } from "../../state-management/hooks";
 import { getUsers } from "../../state-management/fetchingDataSlices/usersSlice";
 import { addUser } from "../../state-management/fetchingDataSlices/userApis";
 
@@ -29,14 +36,13 @@ const SignUp = () => {
     setError,
     formState: { errors, isSubmitting },
   } = useForm<TSignUpSchema>({ resolver: zodResolver(signUpSchema) });
-  const { users } = useAppSelector((state) => state.users);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<TSignUpSchema> = async (data) => {
     try {
-      await dispatch(getUsers()).unwrap();
+      const users = await dispatch(getUsers()).unwrap();
 
       const checkUser = users.find((user) => user.userName === data.userName);
 
@@ -50,6 +56,8 @@ const SignUp = () => {
               email: data.email,
               password: data.password,
               favList: [],
+              age: data.age,
+              gender: data.gender,
             })
           ).unwrap();
 
@@ -222,6 +230,87 @@ const SignUp = () => {
                 </FormErrorMessage>
               </FormControl>
             </Flex>
+
+            {/*                            gender and age                                */}
+            <Flex
+              alignItems={"center"}
+              justifyContent={"space-between"}
+              gap={"1rem"}
+              flexWrap={["wrap", "wrap", "nowrap"]}
+              w={"100%"}
+            >
+              {/* gender */}
+              <FormControl isInvalid={!!errors.gender}>
+                <FormLabel color="whitesmoke">gender</FormLabel>
+                <Select
+                  focusBorderColor="sec.500"
+                  color="whitesmoke"
+                  {...register("gender")}
+                >
+                  <option
+                    className="!bg-[#2A2A2A]  text-gray-300"
+                    value={"male"}
+                  >
+                    male
+                  </option>
+                  <option
+                    className="!bg-[#2A2A2A]  text-gray-300"
+                    value={"female"}
+                  >
+                    female
+                  </option>
+                  <option
+                    className="!bg-[#2A2A2A]  text-gray-300"
+                    value={"other"}
+                  >
+                    other
+                  </option>
+                </Select>
+
+                <FormHelperText color={"gray.300"} hidden={!!errors.gender}>
+                  choose your gender.
+                </FormHelperText>
+                <FormErrorMessage>{errors.gender?.message}</FormErrorMessage>
+              </FormControl>
+
+              {/*  age */}
+              <FormControl isInvalid={!!errors.age}>
+                <FormLabel color="whitesmoke">age</FormLabel>
+                <NumberInput
+                  {...register("age")}
+                  defaultValue={20}
+                  focusBorderColor="sec.500"
+                  color="whitesmoke"
+                  max={100}
+                  min={7}
+                >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper color={"white"} />
+                    <NumberDecrementStepper color={"white"} />
+                  </NumberInputStepper>
+                </NumberInput>
+
+                <FormHelperText color={"gray.300"} hidden={!!errors.age}>
+                  choose your age.
+                </FormHelperText>
+                <FormErrorMessage>{errors.age?.message}</FormErrorMessage>
+              </FormControl>
+            </Flex>
+
+            {/* terms checkBox */}
+
+            <FormControl isInvalid={!!errors.agreeTerms}>
+              <Checkbox
+                {...register("agreeTerms")}
+                colorScheme="sec"
+                color="whitesmoke"
+                alignSelf={"start"}
+              >
+                accept all terms
+              </Checkbox>
+              <FormErrorMessage>{errors.agreeTerms?.message}</FormErrorMessage>
+            </FormControl>
 
             {/* root error */}
 

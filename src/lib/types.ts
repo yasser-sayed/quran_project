@@ -40,6 +40,20 @@ export const signUpSchema = z
       .refine((value) => /\d/.test(value), "password should contain numbers"),
 
     confirmPassword: z.string(),
+    gender: z.enum(["male", "female", "other"], {
+      message: "please choose your gender",
+    }),
+    age: z.preprocess(
+      (value) => Number(value),
+      z
+        .number()
+        .int()
+        .min(7, "you must be at least 7 years old")
+        .max(100, "you must be under 100 years old")
+    ),
+    agreeTerms: z.boolean().refine((value) => value === true, {
+      message: "please read and accepts our terms",
+    }),
   })
   .refine((data) => data.confirmPassword === data.password, {
     message: "password don't match",
@@ -57,4 +71,6 @@ export interface User {
   email: string;
   password: string;
   favList: string[];
+  gender: "male" | "female" | "other";
+  age: number;
 }

@@ -7,7 +7,9 @@
       "userName": "Luka2023",
       "email": "heshamkhalil1988@gmail.com",
       "password": "123456",
-      "favList": []
+      "favList": [],
+      "gender": "other",
+      "age": 14
     },
     {
       "id": "6w43h",
@@ -16,7 +18,9 @@
       "userName": "rana2023",
       "email": "rana@gmail.com",
       "password": "12345",
-      "favList": []
+      "favList": [],
+      "gender": "other",
+      "age": 14
     },
     {
       "id": "sd535hb",
@@ -25,7 +29,9 @@
       "userName": "asola",
       "email": "aseel@gmail.com",
       "password": "123456",
-      "favList": []
+      "favList": [],
+      "gender": "other",
+      "age": 14
     },
     {
       "id": "4QIa-U6",
@@ -34,7 +40,9 @@
       "userName": "yasser-sayed",
       "email": "yassersayed@gmail.com",
       "password": "123456",
-      "favList": []
+      "favList": [],
+      "gender": "other",
+      "age": 14
     },
     {
       "id": "CHFLqTT",
@@ -43,7 +51,9 @@
       "userName": "sama-ahmed",
       "email": "sama@gmail.com",
       "password": "123456 ",
-      "favList": []
+      "favList": [],
+      "gender": "other",
+      "age": 14
     },
     {
       "id": "mFCwrNj",
@@ -52,7 +62,9 @@
       "userName": "ziad-ahmed",
       "email": "ziad@gmail.com",
       "password": "123456",
-      "favList": []
+      "favList": [],
+      "gender": "other",
+      "age": 14
     },
     {
       "id": "TwVqb08",
@@ -61,7 +73,9 @@
       "userName": "amira-khaled",
       "email": "amira@gmail.com",
       "password": "123456",
-      "favList": []
+      "favList": [],
+      "gender": "other",
+      "age": 14
     },
     {
       "id": "MpSFYZz",
@@ -70,7 +84,9 @@
       "userName": "amirr",
       "email": "ziad-amir@gmail.com",
       "password": "123456",
-      "favList": []
+      "favList": [],
+      "gender": "other",
+      "age": 14
     },
     {
       "id": "YJPid87",
@@ -79,7 +95,9 @@
       "userName": "neven-shokry",
       "email": "neven@gmail.com",
       "password": "123456",
-      "favList": []
+      "favList": [],
+      "gender": "other",
+      "age": 14
     },
     {
       "firstName": "tamer",
@@ -88,7 +106,9 @@
       "email": "tamer@gmail.com",
       "password": "123456",
       "id": "ym8L_DD",
-      "favList": []
+      "favList": [],
+      "gender": "other",
+      "age": 14
     },
     {
       "firstName": "tamara",
@@ -97,7 +117,9 @@
       "email": "tamara@gmail.com",
       "password": "123456",
       "id": "NQavbZZ",
-      "favList": []
+      "favList": [],
+      "gender": "other",
+      "age": 14
     },
     {
       "firstName": "gehad",
@@ -106,7 +128,9 @@
       "email": "gehadsayed@gmail.com",
       "password": "123456",
       "id": "ZvtaGmi",
-      "favList": []
+      "favList": [],
+      "gender": "other",
+      "age": 14
     },
     {
       "firstName": "ahmed",
@@ -115,6 +139,8 @@
       "email": "yassersayed952@gmail.com",
       "password": "123456!",
       "favList": [],
+      "gender": "other",
+      "age": 14,
       "id": "wX8WwER"
     }
   ]
