@@ -34,10 +34,10 @@ export const addUser = createAsyncThunk<User, User, { rejectValue: string }>(
 
       return data.data;
     } catch (err) {
-      if (axios.isAxiosError(err) && err.response) {
-        return rejectWithValue(err.response.data.message);
+      if (axios.isAxiosError(err) && err.message) {
+        return rejectWithValue(err.message);
       }
-      return rejectWithValue("json-server is down");
+      return rejectWithValue("un expected error");
     }
   }
 );

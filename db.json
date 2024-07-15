@@ -7,9 +7,11 @@
       "userName": "Luka2023",
       "email": "heshamkhalil1988@gmail.com",
       "password": "123456",
-      "favList": [],
       "gender": "other",
-      "age": 14
+      "age": 14,
+      "favList": null,
+      "lastPlayed": null,
+      "playLists": null
     },
     {
       "id": "6w43h",
@@ -18,9 +20,11 @@
       "userName": "rana2023",
       "email": "rana@gmail.com",
       "password": "12345",
-      "favList": [],
       "gender": "other",
-      "age": 14
+      "age": 14,
+      "favList": null,
+      "lastPlayed": null,
+      "playLists": null
     },
     {
       "id": "sd535hb",
@@ -29,9 +33,11 @@
       "userName": "asola",
       "email": "aseel@gmail.com",
       "password": "123456",
-      "favList": [],
       "gender": "other",
-      "age": 14
+      "age": 14,
+      "favList": null,
+      "lastPlayed": null,
+      "playLists": null
     },
     {
       "id": "4QIa-U6",
@@ -40,9 +46,11 @@
       "userName": "yasser-sayed",
       "email": "yassersayed@gmail.com",
       "password": "123456",
-      "favList": [],
       "gender": "other",
-      "age": 14
+      "age": 14,
+      "favList": null,
+      "lastPlayed": null,
+      "playLists": null
     },
     {
       "id": "CHFLqTT",
@@ -51,9 +59,11 @@
       "userName": "sama-ahmed",
       "email": "sama@gmail.com",
       "password": "123456 ",
-      "favList": [],
       "gender": "other",
-      "age": 14
+      "age": 14,
+      "favList": null,
+      "lastPlayed": null,
+      "playLists": null
     },
     {
       "id": "mFCwrNj",
@@ -62,9 +72,11 @@
       "userName": "ziad-ahmed",
       "email": "ziad@gmail.com",
       "password": "123456",
-      "favList": [],
       "gender": "other",
-      "age": 14
+      "age": 14,
+      "favList": null,
+      "lastPlayed": null,
+      "playLists": null
     },
     {
       "id": "TwVqb08",
@@ -73,9 +85,11 @@
       "userName": "amira-khaled",
       "email": "amira@gmail.com",
       "password": "123456",
-      "favList": [],
       "gender": "other",
-      "age": 14
+      "age": 14,
+      "favList": null,
+      "lastPlayed": null,
+      "playLists": null
     },
     {
       "id": "MpSFYZz",
@@ -84,9 +98,11 @@
       "userName": "amirr",
       "email": "ziad-amir@gmail.com",
       "password": "123456",
-      "favList": [],
       "gender": "other",
-      "age": 14
+      "age": 14,
+      "favList": null,
+      "lastPlayed": null,
+      "playLists": null
     },
     {
       "id": "YJPid87",
@@ -95,9 +111,11 @@
       "userName": "neven-shokry",
       "email": "neven@gmail.com",
       "password": "123456",
-      "favList": [],
       "gender": "other",
-      "age": 14
+      "age": 14,
+      "favList": null,
+      "lastPlayed": null,
+      "playLists": null
     },
     {
       "firstName": "tamer",
@@ -106,9 +124,11 @@
       "email": "tamer@gmail.com",
       "password": "123456",
       "id": "ym8L_DD",
-      "favList": [],
       "gender": "other",
-      "age": 14
+      "age": 14,
+      "favList": null,
+      "lastPlayed": null,
+      "playLists": null
     },
     {
       "firstName": "tamara",
@@ -117,9 +137,11 @@
       "email": "tamara@gmail.com",
       "password": "123456",
       "id": "NQavbZZ",
-      "favList": [],
       "gender": "other",
-      "age": 14
+      "age": 14,
+      "favList": null,
+      "lastPlayed": null,
+      "playLists": null
     },
     {
       "firstName": "gehad",
@@ -128,9 +150,11 @@
       "email": "gehadsayed@gmail.com",
       "password": "123456",
       "id": "ZvtaGmi",
-      "favList": [],
       "gender": "other",
-      "age": 14
+      "age": 14,
+      "favList": null,
+      "lastPlayed": null,
+      "playLists": null
     },
     {
       "firstName": "ahmed",
@@ -138,10 +162,25 @@
       "userName": "yasser-sayedD",
       "email": "yassersayed952@gmail.com",
       "password": "123456!",
-      "favList": [],
       "gender": "other",
       "age": 14,
+      "favList": null,
+      "lastPlayed": null,
+      "playLists": null,
       "id": "wX8WwER"
+    },
+    {
+      "firstName": "ahmed",
+      "lastName": "samy",
+      "userName": "ahmedSamy",
+      "email": "yassersayed952@gmail.com",
+      "password": "1234!",
+      "age": 20,
+      "favList": null,
+      "lastPlayed": null,
+      "playLists": null,
+      "gender": "male",
+      "id": "71PJWMl"
     }
   ]
 }

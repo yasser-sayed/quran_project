@@ -3,6 +3,7 @@ import { z } from "zod";
 export const logInSchema = z.object({
   userName: z.string().min(4, "userName can't be less than 4 characters"),
   password: z.string().min(5, "password should be at least 5 characters"),
+  remmberMe: z.boolean(),
 });
 
 export const signUpSchema = z
@@ -63,6 +64,13 @@ export const signUpSchema = z
 export type TLogInSchema = z.infer<typeof logInSchema>;
 export type TSignUpSchema = z.infer<typeof signUpSchema>;
 
+export type TPlayList = { name: string; shaykh: string[] };
+export type TFavList = null | string[];
+export type TLastPlayed = null | string[];
+export type TPlayLists = null | {
+  [key: string]: TPlayList;
+};
+
 export interface User {
   readonly id?: string;
   firstName: string;
@@ -70,7 +78,9 @@ export interface User {
   userName: string;
   email: string;
   password: string;
-  favList: string[];
-  gender: "male" | "female" | "other";
   age: number;
+  gender: "male" | "female" | "other";
+  favList: TFavList;
+  playLists: TPlayLists;
+  lastPlayed: TLastPlayed;
 }

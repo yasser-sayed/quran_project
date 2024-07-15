@@ -17,6 +17,7 @@ import {
   InputRightElement,
   InputGroup,
   IconButton,
+  Image,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -27,6 +28,8 @@ import { TLogInSchema, User, logInSchema } from "../../lib/types";
 import { useAppDispatch } from "../../state-management/hooks";
 import { getUsers } from "../../state-management/fetchingDataSlices/usersSlice";
 import { setUser } from "../../state-management/userDetSlice/userDetSlice";
+import { setUserId } from "../../state-management/userDetSlice/userLoginSlice";
+import mushaf from "../../assets/mushaf.png";
 
 const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -50,6 +53,9 @@ const LogIn = () => {
       if (userCheck) {
         if (userCheck.password === data.password) {
           dispatch(setUser(userCheck));
+          if (data.remmberMe) {
+            dispatch(setUserId(userCheck.id as string));
+          }
           navigate("/");
         } else {
           setError("password", { message: "invalid password" });
@@ -67,7 +73,7 @@ const LogIn = () => {
       alignItems={"center"}
       justifyContent={"center"}
       minH={["unset", "100vh"]}
-      bgGradient="linear(to-b, #2A2A2A, main)"
+      bgGradient="linear(to-b, third, main)"
     >
       <Card
         as={Container}
@@ -87,6 +93,10 @@ const LogIn = () => {
           >
             Log In
           </Heading>
+
+          <Flex alignItems={"center"} justifyContent={"center"}>
+            <Image src={mushaf} alt="img" w={"150px"}></Image>
+          </Flex>
         </CardHeader>
         <CardBody>
           <Flex
@@ -138,14 +148,19 @@ const LogIn = () => {
                 </InputRightElement>
               </InputGroup>
               <FormHelperText hidden={!!errors.password} color={"gray.300"}>
-                enter your username.
+                enter your password.
               </FormHelperText>
               <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
             </FormControl>
 
             {/* remmber me */}
 
-            <Checkbox colorScheme="sec" color="whitesmoke" alignSelf={"start"}>
+            <Checkbox
+              {...register("remmberMe")}
+              colorScheme="sec"
+              color="whitesmoke"
+              alignSelf={"start"}
+            >
               Remmber Me
             </Checkbox>
 

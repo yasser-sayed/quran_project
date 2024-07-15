@@ -2,9 +2,10 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./style/index.css";
 import { Provider } from "react-redux";
-import { store } from "./state-management/store.ts";
+import { persistor, store } from "./state-management/store.ts";
 import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { PersistGate } from "redux-persist/integration/react";
 
 const theme = extendTheme({
   colors: {
@@ -27,9 +28,11 @@ const theme = extendTheme({
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <Provider store={store}>
-      <ChakraProvider theme={theme}>
-        <App />
-      </ChakraProvider>
+      <PersistGate persistor={persistor}>
+        <ChakraProvider theme={theme}>
+          <App />
+        </ChakraProvider>
+      </PersistGate>
     </Provider>
   </BrowserRouter>
 );

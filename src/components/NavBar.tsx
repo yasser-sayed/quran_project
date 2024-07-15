@@ -11,13 +11,39 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaHome, FaSearch } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
-import { useAppSelector } from "../state-management/hooks";
+import { useAppDispatch, useAppSelector } from "../state-management/hooks";
+import {
+  getUser,
+  unSetUser,
+} from "../state-management/userDetSlice/userDetSlice";
+import { useEffect } from "react";
+import { unSetUserId } from "../state-management/userDetSlice/userLoginSlice";
+import Loading from "./Loading";
 
 const NavBar = () => {
-  const { user } = useAppSelector((state) => state.userDet);
+  const { user, userLoading } = useAppSelector((state) => state.userDet);
+  const {
+    logedIn,
+    uIL1c5cVta2, //user Id
+  } = useAppSelector((state) => state.auth);
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const logOut = () => {
+    dispatch(unSetUser());
+    dispatch(unSetUserId());
+    navigate("/");
+  };
+
+  useEffect(() => {
+    if (logedIn) {
+      dispatch(getUser(uIL1c5cVta2 as string));
+    }
+  }, []);
 
   return (
     <Flex
@@ -74,9 +100,13 @@ const NavBar = () => {
         </Box>
       </Flex>
 
+      {/* login user loading */}
+
+      <Loading divMinHight="unset" loaderSize={10} hidden={!userLoading} />
+
       {/* login and sign up */}
       <Flex
-        hidden={!!user}
+        hidden={!!user || userLoading}
         gap={"1rem"}
         px={"1rem"}
         rounded={9999}
@@ -121,6 +151,8 @@ const NavBar = () => {
                 bg={"third"}
                 borderColor={"main"}
                 _hover={{ bg: "sec.600" }}
+                as={Link}
+                to={`/profile/${user?.id}`}
               >
                 My Account
               </MenuItem>
@@ -128,6 +160,8 @@ const NavBar = () => {
                 bg={"third"}
                 borderColor={"main"}
                 _hover={{ bg: "sec.600" }}
+                as={Link}
+                to={`/favlist/${user?.id}`}
               >
                 Favouraties{" "}
               </MenuItem>
@@ -136,11 +170,14 @@ const NavBar = () => {
                 bg={"third"}
                 borderColor={"main"}
                 _hover={{ bg: "sec.600" }}
+                as={Link}
+                to="/settings"
               >
                 Settings{" "}
               </MenuItem>
               <MenuDivider color={"white"} />
               <MenuItem
+                onClick={logOut}
                 bg={"third"}
                 color={"red"}
                 borderColor={"main"}

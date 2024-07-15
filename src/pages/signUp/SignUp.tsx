@@ -14,11 +14,6 @@ import {
   CardFooter,
   Text,
   Select,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
   Checkbox,
 } from "@chakra-ui/react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -55,9 +50,11 @@ const SignUp = () => {
               userName: data.userName,
               email: data.email,
               password: data.password,
-              favList: [],
               age: data.age,
               gender: data.gender,
+              favList: null,
+              lastPlayed: null,
+              playLists: null,
             })
           ).unwrap();
 
@@ -78,7 +75,7 @@ const SignUp = () => {
       alignItems={"center"}
       justifyContent={"center"}
       minH={["unset", "100vh"]}
-      bgGradient="linear(to-b, #2A2A2A, main)"
+      bgGradient="linear(to-b, third, main)"
     >
       <Card
         as={Container}
@@ -276,20 +273,13 @@ const SignUp = () => {
               {/*  age */}
               <FormControl isInvalid={!!errors.age}>
                 <FormLabel color="whitesmoke">age</FormLabel>
-                <NumberInput
+                <Input
+                  type="number"
                   {...register("age")}
-                  defaultValue={20}
                   focusBorderColor="sec.500"
                   color="whitesmoke"
-                  max={100}
-                  min={7}
-                >
-                  <NumberInputField />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper color={"white"} />
-                    <NumberDecrementStepper color={"white"} />
-                  </NumberInputStepper>
-                </NumberInput>
+                  defaultValue={"7"}
+                />
 
                 <FormHelperText color={"gray.300"} hidden={!!errors.age}>
                   choose your age.
