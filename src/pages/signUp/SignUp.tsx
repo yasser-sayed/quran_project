@@ -18,13 +18,15 @@ import {
 } from "@chakra-ui/react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { TSignUpSchema, signUpSchema } from "../../lib/types";
+import { TSignUpSchema, createSignUpSchema } from "../../lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAppDispatch } from "../../state-management/hooks";
+import { useAppDispatch, useAppSelector } from "../../state-management/hooks";
 import { getUsers } from "../../state-management/fetchingDataSlices/usersSlice";
 import { addUser } from "../../state-management/fetchingDataSlices/userApis";
 
 const SignUp = () => {
+  const { isEn } = useAppSelector((state) => state.settings);
+  const signUpSchema = createSignUpSchema(isEn);
   const {
     register,
     handleSubmit,
@@ -63,7 +65,11 @@ const SignUp = () => {
           setError("root", { message: err as string });
         }
       } else {
-        setError("userName", { message: "userName is already used" });
+        setError("userName", {
+          message: isEn
+            ? "userName is already used"
+            : "اسم المستخدم موجود بالفعل",
+        });
       }
     } catch (err) {
       setError("root", { message: err as string });
@@ -88,7 +94,9 @@ const SignUp = () => {
       >
         <CardHeader>
           <Heading size={"xl"} color={"white"} textAlign={"center"}>
-            Sign up to start listening
+            {isEn
+              ? "Sign up to start listening"
+              : "انشئ حساب للبدأ في الاستماع"}
           </Heading>
         </CardHeader>
         <CardBody>
@@ -110,32 +118,36 @@ const SignUp = () => {
             >
               {/* first name  */}
               <FormControl isInvalid={!!errors.firstName}>
-                <FormLabel color="whitesmoke">first name</FormLabel>
+                <FormLabel color="whitesmoke">
+                  {isEn ? "first name" : "الاسم الاول"}
+                </FormLabel>
                 <Input
                   {...register("firstName")}
                   focusBorderColor="sec.500"
                   color="whitesmoke"
                   type="text"
-                  placeholder="last name"
+                  placeholder={isEn ? "first name" : "الاسم الاول"}
                 />
                 <FormHelperText hidden={!!errors.firstName} color={"gray.300"}>
-                  enter your first name.
+                  {isEn ? "enter your first name." : "ادخل اسمك الاول."}
                 </FormHelperText>
                 <FormErrorMessage>{errors.firstName?.message}</FormErrorMessage>
               </FormControl>
 
               {/* last name  */}
               <FormControl isInvalid={!!errors.lastName}>
-                <FormLabel color="whitesmoke">last name</FormLabel>
+                <FormLabel color="whitesmoke">
+                  {isEn ? "last name" : "الاسم الاخير (العائله)"}
+                </FormLabel>
                 <Input
                   {...register("lastName")}
                   focusBorderColor="sec.500"
                   color="whitesmoke"
                   type="text"
-                  placeholder="last name"
+                  placeholder={isEn ? "last name" : "الاسم الاخير (العائله)"}
                 />
                 <FormHelperText hidden={!!errors.lastName} color={"gray.300"}>
-                  enter your last name.
+                  {isEn ? "enter your last name." : "ادخل اسم العائله."}
                 </FormHelperText>
                 <FormErrorMessage>{errors.lastName?.message}</FormErrorMessage>
               </FormControl>
@@ -151,32 +163,36 @@ const SignUp = () => {
             >
               {/* userName  */}
               <FormControl isInvalid={!!errors.userName}>
-                <FormLabel color="whitesmoke">username</FormLabel>
+                <FormLabel color="whitesmoke">
+                  {isEn ? "username" : "اسم المستخدم"}
+                </FormLabel>
                 <Input
                   {...register("userName")}
                   focusBorderColor="sec.500"
                   color="whitesmoke"
                   type="text"
-                  placeholder="username"
+                  placeholder={isEn ? "username" : "اسم المستخدم"}
                 />
                 <FormHelperText hidden={!!errors.userName} color={"gray.300"}>
-                  enter your username.
+                  {isEn ? "enter your username." : "ادخل اسم المستخدم."}
                 </FormHelperText>
                 <FormErrorMessage>{errors.userName?.message}</FormErrorMessage>
               </FormControl>
 
               {/* email  */}
               <FormControl isInvalid={!!errors.email}>
-                <FormLabel color="whitesmoke">email</FormLabel>
+                <FormLabel color="whitesmoke">
+                  {isEn ? "email" : "ايميل"}
+                </FormLabel>
                 <Input
                   {...register("email")}
                   focusBorderColor="sec.500"
                   color="whitesmoke"
                   type="text"
-                  placeholder="username"
+                  placeholder={isEn ? "email" : "ايميل"}
                 />
                 <FormHelperText hidden={!!errors.email} color={"gray.300"}>
-                  enter your email.
+                  {isEn ? "enter your email." : "ادخل ايميلك."}
                 </FormHelperText>
                 <FormErrorMessage>{errors.email?.message}</FormErrorMessage>
               </FormControl>
@@ -192,35 +208,39 @@ const SignUp = () => {
             >
               {/* password */}
               <FormControl isInvalid={!!errors.password}>
-                <FormLabel color="whitesmoke">Password</FormLabel>
+                <FormLabel color="whitesmoke">
+                  {isEn ? "Password" : "كلمه السر"}
+                </FormLabel>
                 <Input
                   {...register("password")}
                   focusBorderColor="sec.500"
                   color="whitesmoke"
                   type="password"
-                  placeholder="Password"
+                  placeholder={isEn ? "Password" : "كلمه السر"}
                 />
                 <FormHelperText hidden={!!errors.password} color={"gray.300"}>
-                  password should be more than 5.
+                  {isEn ? "choose a strog password." : "اختار كلمه سر قويه."}
                 </FormHelperText>
                 <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
               </FormControl>
 
               {/* confirm password */}
               <FormControl isInvalid={!!errors.confirmPassword}>
-                <FormLabel color="whitesmoke">confirm Password</FormLabel>
+                <FormLabel color="whitesmoke">
+                  {isEn ? "confirm Password" : "تاكيد كلمه السر"}
+                </FormLabel>
                 <Input
                   {...register("confirmPassword")}
                   focusBorderColor="sec.500"
                   color="whitesmoke"
                   type="password"
-                  placeholder="confirm Password"
+                  placeholder={isEn ? "confirm Password" : "تاكيد كلمه السر"}
                 />
                 <FormHelperText
                   hidden={!!errors.confirmPassword}
                   color={"gray.300"}
                 >
-                  confirm your password.
+                  {isEn ? "confirm your password." : "اعد كتابه كلمه المرور."}
                 </FormHelperText>
                 <FormErrorMessage>
                   {errors.confirmPassword?.message}
@@ -238,7 +258,9 @@ const SignUp = () => {
             >
               {/* gender */}
               <FormControl isInvalid={!!errors.gender}>
-                <FormLabel color="whitesmoke">gender</FormLabel>
+                <FormLabel color="whitesmoke">
+                  {isEn ? "gender" : "النوع"}
+                </FormLabel>
                 <Select
                   focusBorderColor="sec.500"
                   color="whitesmoke"
@@ -248,31 +270,33 @@ const SignUp = () => {
                     className="!bg-[#2A2A2A]  text-gray-300"
                     value={"male"}
                   >
-                    male
+                    {isEn ? "male" : "ذكر"}
                   </option>
                   <option
                     className="!bg-[#2A2A2A]  text-gray-300"
                     value={"female"}
                   >
-                    female
+                    {isEn ? "female" : "انثي"}
                   </option>
                   <option
                     className="!bg-[#2A2A2A]  text-gray-300"
                     value={"other"}
                   >
-                    other
+                    {isEn ? "other" : "اخر"}
                   </option>
                 </Select>
 
                 <FormHelperText color={"gray.300"} hidden={!!errors.gender}>
-                  choose your gender.
+                  {isEn ? "choose your gender." : "اختر نوعك."}
                 </FormHelperText>
                 <FormErrorMessage>{errors.gender?.message}</FormErrorMessage>
               </FormControl>
 
               {/*  age */}
               <FormControl isInvalid={!!errors.age}>
-                <FormLabel color="whitesmoke">age</FormLabel>
+                <FormLabel color="whitesmoke">
+                  {isEn ? "age" : "العمر"}
+                </FormLabel>
                 <Input
                   type="number"
                   {...register("age")}
@@ -282,7 +306,7 @@ const SignUp = () => {
                 />
 
                 <FormHelperText color={"gray.300"} hidden={!!errors.age}>
-                  choose your age.
+                  {isEn ? "choose your age." : "اختر غمرك"}
                 </FormHelperText>
                 <FormErrorMessage>{errors.age?.message}</FormErrorMessage>
               </FormControl>
@@ -297,7 +321,7 @@ const SignUp = () => {
                 color="whitesmoke"
                 alignSelf={"start"}
               >
-                accept all terms
+                {isEn ? "accept all terms" : "الموافقه علي الشروط والاحكام"}
               </Checkbox>
               <FormErrorMessage>{errors.agreeTerms?.message}</FormErrorMessage>
             </FormControl>
@@ -313,13 +337,13 @@ const SignUp = () => {
             <Button
               type="submit"
               isLoading={isSubmitting}
-              loadingText="signing up"
+              loadingText={isEn ? "signing Up" : " جاري انشاء حساب"}
               colorScheme="sec"
               w={"100%"}
               rounded={9999}
               color={"black"}
             >
-              Sign Up
+              {isEn ? "Sign Up" : "انشاء حساب"}
             </Button>
           </Flex>
         </CardBody>
@@ -328,16 +352,16 @@ const SignUp = () => {
 
         <CardFooter>
           <Text color={"white"} textAlign={"center"} w={"100%"}>
-            already have an account?{" "}
+            {isEn ? "already have an account?" : "لديك حساب بالفعل؟"}{" "}
             <Text
               as={Link}
               _hover={{ color: "sec.700" }}
               to={"/login"}
               color="sec.400"
             >
-              login
+              {isEn ? "login" : "سجل الدخول"}
             </Text>{" "}
-            now!
+            {isEn ? "now!" : "الان!"}
           </Text>
         </CardFooter>
       </Card>

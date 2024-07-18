@@ -7,13 +7,23 @@ import SignUp from "./pages/signUp/SignUp";
 import PageNotFound from "./pages/PageNotFound";
 import NavBar from "./components/NavBar";
 import { Box } from "@chakra-ui/react";
-import { useAppSelector } from "./state-management/hooks";
+import { useAppDispatch, useAppSelector } from "./state-management/hooks";
 import FavList from "./pages/favList/FavList";
 import Settings from "./pages/settings/Settings";
 import Loading from "./components/Loading";
+import { useEffect } from "react";
+import { setArLang } from "./state-management/settingsSlice/settingsSlice";
 
 const App = () => {
   const { user, userLoading } = useAppSelector((state) => state.userDet);
+  const { lang } = useAppSelector((state) => state.settings);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (lang === "ar") {
+      dispatch(setArLang());
+    }
+  }, []);
 
   return (
     <Box bg={"main"} minH={"100vh"} color="white" overflowY={"hidden"}>

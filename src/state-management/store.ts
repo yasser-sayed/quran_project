@@ -4,6 +4,7 @@ import userDet from "./userDetSlice/userDetSlice";
 import userApis from "./fetchingDataSlices/userApis";
 import auth from "./userDetSlice/userLoginSlice";
 import storage from "redux-persist/lib/storage";
+import settings from "./settingsSlice/settingsSlice";
 import {
   persistStore,
   persistReducer,
@@ -18,7 +19,7 @@ import {
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth"],
+  whitelist: ["auth", "settings"],
 };
 
 const mainReducers = combineReducers({
@@ -26,6 +27,7 @@ const mainReducers = combineReducers({
   userDet,
   userApis,
   auth,
+  settings,
 });
 
 const reducer = persistReducer(persistConfig, mainReducers);

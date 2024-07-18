@@ -18,14 +18,15 @@ import {
   InputGroup,
   IconButton,
   Image,
+  InputLeftElement,
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
-import { TLogInSchema, User, logInSchema } from "../../lib/types";
-import { useAppDispatch } from "../../state-management/hooks";
+import { TLogInSchema, User, createLogInSchema } from "../../lib/types";
+import { useAppDispatch, useAppSelector } from "../../state-management/hooks";
 import { getUsers } from "../../state-management/fetchingDataSlices/usersSlice";
 import { setUser } from "../../state-management/userDetSlice/userDetSlice";
 import { setUserId } from "../../state-management/userDetSlice/userLoginSlice";
@@ -35,6 +36,8 @@ const LogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { isEn } = useAppSelector((state) => state.settings);
+  const logInSchema = createLogInSchema(isEn);
   const {
     register,
     handleSubmit,
@@ -58,15 +61,22 @@ const LogIn = () => {
           }
           navigate("/");
         } else {
-          setError("password", { message: "invalid password" });
+          setError("password", {
+            message: isEn ? "invalid password" : "كلمه السر خاطئه",
+          });
         }
       } else {
-        setError("userName", { message: "user not found" });
+        setError("userName", {
+          message: isEn ? "user not found" : "اسم المستخدم غير موجود",
+        });
       }
     } catch (err) {
       setError("root", { message: err as string });
     }
   };
+
+  // show icon button
+  const ShowButton = isEn ? InputRightElement : InputLeftElement;
 
   return (
     <Flex
@@ -91,7 +101,7 @@ const LogIn = () => {
             textAlign={"center"}
             fontFamily={"inherit"}
           >
-            Log In
+            {isEn ? "Log In" : "تسجيل الدخول"}
           </Heading>
 
           <Flex alignItems={"center"} justifyContent={"center"}>
@@ -109,46 +119,52 @@ const LogIn = () => {
           >
             {/* userName  */}
             <FormControl isInvalid={!!errors.userName}>
-              <FormLabel color="whitesmoke">username</FormLabel>
+              <FormLabel color="whitesmoke">
+                {isEn ? "username" : "اسم المستخدم"}
+              </FormLabel>
               <Input
                 {...register("userName")}
                 focusBorderColor="sec.500"
                 color="whitesmoke"
                 type="text"
-                placeholder="username"
+                placeholder={isEn ? "username" : "اسم المستخدم"}
               />
               <FormHelperText hidden={!!errors.userName} color={"gray.300"}>
-                enter your username.
+                {isEn ? "enter your username." : "ادخل اسم المستخدم."}
               </FormHelperText>
               <FormErrorMessage>{errors.userName?.message}</FormErrorMessage>
             </FormControl>
 
             {/* password */}
             <FormControl isInvalid={!!errors.password}>
-              <FormLabel color="whitesmoke">Password</FormLabel>
+              <FormLabel color="whitesmoke">
+                {" "}
+                {isEn ? "Password" : "كلمه السر"}
+              </FormLabel>
               <InputGroup size="md">
                 <Input
                   {...register("password")}
-                  pr="4.5rem"
+                  pl={!isEn ? "6rem" : "1rem"}
+                  pr={isEn ? "3rem" : "1rem"}
                   type={showPassword ? "text" : "password"}
                   focusBorderColor="sec.500"
                   color="whitesmoke"
-                  placeholder="Password"
+                  placeholder={isEn ? "Password" : "كلمه السر"}
                 />
-                <InputRightElement width="4.5rem">
+                <ShowButton width="3rem">
                   <IconButton
                     h="1.75rem"
                     size="sm"
                     onClick={() => setShowPassword(!showPassword)}
                     icon={showPassword ? <FiEye /> : <FiEyeOff />}
-                    aria-label="Toggle password visibility"
+                    aria-label={isEn ? "show password" : " عرض كلمه السر"}
                     variant={"text"}
                     color={"white"}
                   />
-                </InputRightElement>
+                </ShowButton>
               </InputGroup>
               <FormHelperText hidden={!!errors.password} color={"gray.300"}>
-                enter your password.
+                {isEn ? "enter your password." : "ادخل كلمه السر"}
               </FormHelperText>
               <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
             </FormControl>
@@ -161,7 +177,7 @@ const LogIn = () => {
               color="whitesmoke"
               alignSelf={"start"}
             >
-              Remmber Me
+              {isEn ? "Remmber Me" : "تذكرني"}
             </Checkbox>
 
             {/* root error */}
@@ -175,13 +191,13 @@ const LogIn = () => {
             <Button
               type="submit"
               isLoading={isSubmitting}
-              loadingText="logging in"
+              loadingText={isEn ? "logging in" : "جاري تسجيل الدخول"}
               colorScheme="sec"
               w={"100%"}
               rounded={9999}
               color={"black"}
             >
-              Log In
+              {isEn ? "Log In" : "تسجيل الدخول"}
             </Button>
           </Flex>
         </CardBody>
@@ -190,16 +206,16 @@ const LogIn = () => {
 
         <CardFooter>
           <Text color={"white"} textAlign={"center"} w={"100%"}>
-            don't have an account?{" "}
+            {isEn ? "don't have an account?" : "ليس لديك حساب؟"}{" "}
             <Text
               as={Link}
               _hover={{ color: "sec.700" }}
               to={"/signup"}
               color="sec.400"
             >
-              signup
+              {isEn ? "signup" : "انشاء حساب"}
             </Text>{" "}
-            now!
+            {isEn ? "now!" : "الان!"}
           </Text>
         </CardFooter>
       </Card>

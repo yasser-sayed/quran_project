@@ -1,7 +1,9 @@
 import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../state-management/hooks";
 
 const PageNotFound = () => {
+  const { isEn } = useAppSelector((state) => state.settings);
   return (
     <Flex
       alignItems="center"
@@ -17,7 +19,9 @@ const PageNotFound = () => {
           404
         </Heading>
         <Text fontSize="xl" mb={4}>
-          Oops! The page you're looking for doesn't exist.
+          {isEn
+            ? "Oops! The page you're looking for doesn't exist."
+            : "ناسف! الصفحه التي تبحث عنها غير موجوده."}
         </Text>
         <Button
           as={Link}
@@ -27,7 +31,7 @@ const PageNotFound = () => {
           size="lg"
           rounded="full"
         >
-          Go Home
+          {isEn ? "Go Home" : "عد للصفحه الرئيسيه"}
         </Button>
       </Box>
     </Flex>

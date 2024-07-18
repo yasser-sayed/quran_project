@@ -10,11 +10,20 @@ import {
   MenuGroup,
   MenuItem,
   MenuList,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaHome, FaSearch } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { useAppDispatch, useAppSelector } from "../state-management/hooks";
+import { IoLanguage } from "react-icons/io5";
 import {
   getUser,
   unSetUser,
@@ -22,9 +31,18 @@ import {
 import { useEffect } from "react";
 import { unSetUserId } from "../state-management/userDetSlice/userLoginSlice";
 import Loading from "./Loading";
+import {
+  setArLang,
+  setEnLang,
+} from "../state-management/settingsSlice/settingsSlice";
 
 const NavBar = () => {
+  //lang modal state
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  //redux distruct
   const { user, userLoading } = useAppSelector((state) => state.userDet);
+  const { isEn } = useAppSelector((state) => state.settings);
   const {
     logedIn,
     uIL1c5cVta2, //user Id
@@ -67,7 +85,7 @@ const NavBar = () => {
         className="hover:scale-105"
         fontFamily={"inherit"}
       >
-        quran
+        {isEn ? "quran" : "قرأن"}
       </Heading>
 
       {/* search bar */}
@@ -94,11 +112,69 @@ const NavBar = () => {
           </div>
           <input
             type="text"
-            placeholder="type here"
+            placeholder={
+              isEn ? "what do you want to listen?" : "ماذا تريد ان تسمع؟"
+            }
             className="outline-none text-[20px] bg-transparent w-full text-white font-normal px-4"
           />
         </Box>
       </Flex>
+
+      {/* choose lang  */}
+
+      <Button
+        variant="ghost"
+        color={"white"}
+        rounded={999}
+        colorScheme="whiteAlpha"
+        leftIcon={<IoLanguage />}
+        onClick={onOpen}
+      >
+        {isEn ? "English" : "العربيه"}
+      </Button>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent bg={"third"} color={"white"}>
+          <ModalHeader>{isEn ? "choose language" : "اختار اللغه"}</ModalHeader>
+          <ModalCloseButton
+            left={isEn ? "unset" : 2}
+            right={isEn ? 2 : "unset"}
+          />
+          <ModalBody>
+            <Button
+              variant="ghost"
+              color={"white"}
+              rounded={999}
+              colorScheme="whiteAlpha"
+              w={"100%"}
+              onClick={() => {
+                dispatch(setArLang()), onClose();
+              }}
+            >
+              {isEn ? "Arabic" : "العربيه"}
+            </Button>
+            <Button
+              variant="ghost"
+              color={"white"}
+              rounded={999}
+              colorScheme="whiteAlpha"
+              w={"100%"}
+              onClick={() => {
+                dispatch(setEnLang()), onClose();
+              }}
+            >
+              {isEn ? "English" : "الانجليزيه"}
+            </Button>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="sec" mr={3} onClick={onClose}>
+              {isEn ? "Close" : "اغلاق"}
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
 
       {/* login user loading */}
 
@@ -122,7 +198,7 @@ const NavBar = () => {
           to="/signup"
           rounded={9999}
         >
-          SignUp
+          {isEn ? "SignUp" : "انشاء حساب"}
         </Button>
         <Button
           size={["sm", "sm", "md", "md", "md", "lg"]}
@@ -132,7 +208,7 @@ const NavBar = () => {
           as={Link}
           to="/login"
         >
-          LogIn
+          {isEn ? "LogIn" : "تسجيل الدخول"}
         </Button>
       </Flex>
 
@@ -143,10 +219,10 @@ const NavBar = () => {
             as={IconButton}
             icon={<CgProfile className="text-3xl" />}
             variant={"text"}
-            aria-label="Options"
+            aria-label={isEn ? "Options" : "الخيارات"}
           ></MenuButton>
           <MenuList bg={"third"} borderColor={"main"}>
-            <MenuGroup title="optins">
+            <MenuGroup title={isEn ? "Options" : "الخيارات"}>
               <MenuItem
                 bg={"third"}
                 borderColor={"main"}
@@ -154,7 +230,7 @@ const NavBar = () => {
                 as={Link}
                 to={`/profile/${user?.id}`}
               >
-                My Account
+                {isEn ? "My Profile" : "حسابي"}
               </MenuItem>
               <MenuItem
                 bg={"third"}
@@ -163,7 +239,7 @@ const NavBar = () => {
                 as={Link}
                 to={`/favlist/${user?.id}`}
               >
-                Favouraties{" "}
+                {isEn ? "Favouraties" : "المفضله"}
               </MenuItem>
 
               <MenuItem
@@ -173,7 +249,7 @@ const NavBar = () => {
                 as={Link}
                 to="/settings"
               >
-                Settings{" "}
+                {isEn ? "Settings" : "الاعدادات"}
               </MenuItem>
               <MenuDivider color={"white"} />
               <MenuItem
@@ -183,7 +259,7 @@ const NavBar = () => {
                 borderColor={"main"}
                 _hover={{ bg: "sec.600", color: "white" }}
               >
-                Log Out
+                {isEn ? "Log Out" : "تسجيل الخروج"}
               </MenuItem>
             </MenuGroup>
           </MenuList>
