@@ -1,29 +1,28 @@
-import { Button } from "@chakra-ui/react";
-import axios from "axios";
+import { Box, Flex, Tab, TabList, TabPanels, Tabs } from "@chakra-ui/react";
+import { useAppSelector } from "../../state-management/hooks";
+import HomeAll from "./components/HomeAll";
+import HomeRewayat from "./components/HomeRewayat";
 
 const Home = () => {
-  const handleClick = async () => {
-    const data = await axios({
-      method: "post",
-      url: "http://localhost:300ss0/users",
-      data: {
-        dataName: "Hesham",
-        lastName: "Khalil",
-        userName: "Luka2023",
-        email: "heshamkhalil1988@gmail.com",
-        password: "123456",
-
-        favList: [],
-      },
-    });
-
-    console.log(data);
-  };
+  const { isEn } = useAppSelector((state) => state.settings);
 
   return (
-    <div className="items-center justify-center flex h-screen">
-      <Button onClick={handleClick}>post</Button>
-    </div>
+    <Box bg="third" py={6} px={4}>
+      <Tabs variant="soft-rounded" colorScheme="sec">
+        <TabList color={"white"}>
+          <Tab color={"white"}>{isEn ? "all" : "الكل"}</Tab>
+          <Tab color={"white"}>{isEn ? "rewayat" : "روايات"}</Tab>
+        </TabList>
+
+        <Flex minH={"100vh"}>
+          <TabPanels>
+            <HomeAll />
+
+            <HomeRewayat />
+          </TabPanels>
+        </Flex>
+      </Tabs>
+    </Box>
   );
 };
 

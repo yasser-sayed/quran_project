@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/home/Home";
-import ShaykhDet from "./pages/shaykhDet/ShaykhDet";
 import LogIn from "./pages/login/LogIn";
 import Profile from "./pages/profile/Profile";
 import SignUp from "./pages/signUp/SignUp";
@@ -13,10 +12,13 @@ import Settings from "./pages/settings/Settings";
 import Loading from "./components/Loading";
 import { useEffect } from "react";
 import { setArLang } from "./state-management/settingsSlice/settingsSlice";
+import Reciter from "./pages/reciter/Reciter";
+import SoundPlayer from "./components/sound/SoundPlayer";
 
 const App = () => {
   const { user, userLoading } = useAppSelector((state) => state.userDet);
-  const { lang } = useAppSelector((state) => state.settings);
+  const { lang, isEn } = useAppSelector((state) => state.settings);
+  const { playList } = useAppSelector((state) => state.soundPlayer);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -26,20 +28,26 @@ const App = () => {
   }, []);
 
   return (
-    <Box bg={"main"} minH={"100vh"} color="white" overflowY={"hidden"}>
+    <Box bg={"main"} minH={"100vh"} color="white">
       <NavBar />
-
       {/* app routes */}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/shaykh" element={<ShaykhDet />} />
+        <Route path="/reciter/:reciterId" element={<Reciter />} />
         <Route
           path="/login"
           element={
             userLoading ? (
               <Loading divMinHight="100vh" loaderSize={20} />
             ) : user ? (
-              <PageNotFound />
+              <PageNotFound
+                heading={isEn ? "oops!" : "اوبس!"}
+                text={
+                  isEn
+                    ? "sorry you need to logout first"
+                    : "نأسف يجب عليك تسجيل الخروج اولا"
+                }
+              />
             ) : (
               <LogIn />
             )
@@ -51,7 +59,14 @@ const App = () => {
             userLoading ? (
               <Loading divMinHight="100vh" loaderSize={20} />
             ) : user ? (
-              <PageNotFound />
+              <PageNotFound
+                heading={isEn ? "oops!" : "اوبس!"}
+                text={
+                  isEn
+                    ? "sorry you need to logout first"
+                    : "نأسف يجب عليك تسجيل الخروج اولا"
+                }
+              />
             ) : (
               <SignUp />
             )
@@ -65,7 +80,14 @@ const App = () => {
             ) : user ? (
               <Profile />
             ) : (
-              <PageNotFound />
+              <PageNotFound
+                heading={isEn ? "oops!" : "اوبس!"}
+                text={
+                  isEn
+                    ? "sorry you need to login first"
+                    : "نأسف يجب عليك تسجيل الدخول اولا"
+                }
+              />
             )
           }
         />
@@ -77,13 +99,23 @@ const App = () => {
             ) : user ? (
               <FavList />
             ) : (
-              <PageNotFound />
+              <PageNotFound
+                heading={isEn ? "oops!" : "اوبس!"}
+                text={
+                  isEn
+                    ? "sorry you need to login first"
+                    : "نأسف يجب عليك تسجيل الدخول اولا"
+                }
+              />
             )
           }
         />
         <Route path="/settings" element={<Settings />} />
         <Route path="/*" element={<PageNotFound />} />
       </Routes>
+
+      {/* audio SoundPlayer */}
+      {playList.length ? <SoundPlayer /> : ""}
     </Box>
   );
 };

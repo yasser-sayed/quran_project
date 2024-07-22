@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { TPageNotFoundProps } from "../pages/PageNotFound";
 
 export const createLogInSchema = (isEn: boolean) =>
   z.object({
@@ -153,3 +154,49 @@ export interface User {
   playLists: TPlayLists;
   lastPlayed: TLastPlayed;
 }
+
+//quran types
+
+export type TMoshaf = {
+  id: number;
+  name: string;
+  server: string;
+  surah_total: number;
+  moshaf_type: number;
+  surah_list: string;
+};
+
+export interface IReciter {
+  id: number;
+  name: string;
+  letter: string;
+  moshaf: TMoshaf[];
+}
+
+export interface ISurah {
+  id: number;
+  name: string;
+  start_page?: number;
+  end_page?: number;
+  makkia?: number;
+  type?: number;
+}
+
+export interface IRewaya {
+  id: number;
+  name: string;
+}
+
+//network Error data
+
+export const arNetWorkErr: TPageNotFoundProps = {
+  heading: "خطأ",
+  hideBtn: true,
+  text: "يبدو ان هناك بعض المشاكل في السيرفر",
+};
+
+export const enNetWorkErr: TPageNotFoundProps = {
+  heading: "error",
+  text: "looks like there is some preblems in the server",
+  hideBtn: true,
+};

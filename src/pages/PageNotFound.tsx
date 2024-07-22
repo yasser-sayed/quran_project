@@ -2,7 +2,17 @@ import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../state-management/hooks";
 
-const PageNotFound = () => {
+export type TPageNotFoundProps = {
+  heading?: string;
+  text?: string;
+  hideBtn?: boolean;
+};
+
+const PageNotFound = ({
+  hideBtn = false,
+  heading = "404",
+  text = "",
+}: TPageNotFoundProps) => {
   const { isEn } = useAppSelector((state) => state.settings);
   return (
     <Flex
@@ -16,14 +26,17 @@ const PageNotFound = () => {
     >
       <Box>
         <Heading as="h1" size="2xl" mb={4}>
-          404
+          {heading}
         </Heading>
         <Text fontSize="xl" mb={4}>
-          {isEn
+          {text
+            ? text
+            : isEn
             ? "Oops! The page you're looking for doesn't exist."
             : "ناسف! الصفحه التي تبحث عنها غير موجوده."}
         </Text>
         <Button
+          hidden={hideBtn}
           as={Link}
           to="/"
           colorScheme="sec"

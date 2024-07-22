@@ -15,6 +15,8 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+import { quranApiSlice } from "./fetchingDataSlices/quranApiSlice";
+import soundPlayer from "./soundSlices/soundPlayerSlice";
 
 const persistConfig = {
   key: "root",
@@ -28,6 +30,8 @@ const mainReducers = combineReducers({
   userApis,
   auth,
   settings,
+  soundPlayer,
+  [quranApiSlice.reducerPath]: quranApiSlice.reducer,
 });
 
 const reducer = persistReducer(persistConfig, mainReducers);
@@ -39,7 +43,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(quranApiSlice.middleware),
 });
 
 export const persistor = persistStore(store);

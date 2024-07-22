@@ -28,7 +28,7 @@ import {
   getUser,
   unSetUser,
 } from "../state-management/userDetSlice/userDetSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { unSetUserId } from "../state-management/userDetSlice/userLoginSlice";
 import Loading from "./Loading";
 import {
@@ -39,6 +39,10 @@ import {
 const NavBar = () => {
   //lang modal state
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  //scroll states
+  const [scrollY, setScrollY] = useState(0);
+  const [scrollUp, setScrollUp] = useState(true);
 
   //redux distruct
   const { user, userLoading } = useAppSelector((state) => state.userDet);
@@ -51,17 +55,39 @@ const NavBar = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  //logout
   const logOut = () => {
     dispatch(unSetUser());
     dispatch(unSetUserId());
     navigate("/");
   };
 
+  //scroll function
+  const handleScroll = () => {
+    if (scrollY > window.scrollY) {
+      setScrollUp(true);
+    } else if (scrollY < window.scrollY) {
+      setScrollUp(false);
+    }
+    setScrollY(window.scrollY);
+  };
+
   useEffect(() => {
+    //check user login
     if (logedIn) {
       dispatch(getUser(uIL1c5cVta2 as string));
     }
   }, []);
+
+  useEffect(() => {
+    //scroll handler
+    setScrollY(window.scrollY);
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrollY, scrollUp]);
 
   return (
     <Flex
@@ -73,10 +99,11 @@ const NavBar = () => {
       p="1rem"
       boxShadow={"2px -8px 20px 20px black"}
       position={"sticky"}
-      top={0}
       zIndex={999}
       flexWrap={"wrap"}
       rowGap={"1rem"}
+      top={scrollUp ? 0 : -24}
+      transitionDuration={"900ms"}
     >
       <Heading
         as={Link}
