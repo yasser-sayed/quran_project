@@ -1,13 +1,16 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AudioData, PlayList } from "react-modern-audio-player";
-import { ISurah, TMoshaf } from "../../lib/types";
+import { IAudio, ISurah, TMoshaf } from "../../lib/types";
 
 export interface ISoundPlayerInitialState {
-  playList: PlayList;
+  playList: IAudio[];
+  playingAudio: IAudio | null;
+  audioIndex: number;
 }
 
 const initialState: ISoundPlayerInitialState = {
   playList: [],
+  playingAudio: null,
+  audioIndex: 0,
 };
 
 const soundPlayerSlice = createSlice({
@@ -28,7 +31,7 @@ const soundPlayerSlice = createSlice({
       const surah_List = moshaf.surah_list.split(",");
 
       const newPlayList = surah_List.map(
-        (surah, index): AudioData => ({
+        (surah, index): IAudio => ({
           id: index,
           src: `${moshaf.server}/${surah.padStart(3, "0")}.mp3`,
           img,
@@ -38,9 +41,31 @@ const soundPlayerSlice = createSlice({
       );
 
       state.playList = newPlayList;
+      state.playingAudio = newPlayList[0];
+      state.audioIndex = 0;
+    },
+
+    //set the playing audio object
+    setPlayingAudio: (state, action: PayloadAction<IAudio>) => {
+      state.playingAudio = action.payload;
+      state.audioIndex = action.payload.id;
+    },
+
+    //set the playing audio index
+    setAudioIndex: (state, action: PayloadAction<number>) => {
+      state.audioIndex = action.payload;
+      state.playingAudio = state.playList[action.payload];
+    },
+
+    //set ready playlist
+    setReadyPlayList: (state, action: PayloadAction<IAudio[]>) => {
+      state.playList = action.payload;
+      state.playingAudio = action.payload[0];
+      state.audioIndex = 0;
     },
   },
 });
 
 export default soundPlayerSlice.reducer;
-export const { setPlayList } = soundPlayerSlice.actions;
+export const { setPlayList, setPlayingAudio, setAudioIndex, setReadyPlayList } =
+  soundPlayerSlice.actions;

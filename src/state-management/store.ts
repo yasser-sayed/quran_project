@@ -17,6 +17,8 @@ import {
 } from "redux-persist";
 import { quranApiSlice } from "./fetchingDataSlices/quranApiSlice";
 import soundPlayer from "./soundSlices/soundPlayerSlice";
+import navBar from "./navBarSlice";
+import reciter from "./reciterSlice/reciterSlice";
 
 const persistConfig = {
   key: "root",
@@ -31,6 +33,8 @@ const mainReducers = combineReducers({
   auth,
   settings,
   soundPlayer,
+  navBar,
+  reciter,
   [quranApiSlice.reducerPath]: quranApiSlice.reducer,
 });
 

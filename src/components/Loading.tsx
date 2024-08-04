@@ -22,6 +22,7 @@ const Loading = ({
       bgGradient={divBgGradient}
       minH={divMinHight}
       hidden={hidden}
+      className="col-span-full"
     >
       <BeatLoader color="#4bc970" size={loaderSize} />
     </Flex>

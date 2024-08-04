@@ -23,6 +23,7 @@ const PageNotFound = ({
       color="white"
       textAlign="center"
       p={4}
+      className="col-span-full"
     >
       <Box>
         <Heading as="h1" size="2xl" mb={4}>

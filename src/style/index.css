@@ -11,12 +11,43 @@
   font-family: "Amiri", serif;
 }
 
-/* width */
+/* scrool bar width */
 ::-webkit-scrollbar {
-  @apply bg-[#2A2A2A] w-[6px];
+  @apply bg-[#1f1f1f] w-[6px];
 }
 
-/* Handle */
+/* scroll bar Handle */
 ::-webkit-scrollbar-thumb {
   @apply bg-[#1ebc4b] rounded-xl;
+}
+
+/* audio player */
+
+.audioPlayer {
+  box-shadow: 0px -5px 20px 0px black;
+  direction: ltr;
+}
+
+.rhap_progress-indicator,
+.rhap_volume-indicator {
+  @apply bg-white;
+}
+
+.rhap_progress-filled,
+.rhap_volume-bar {
+  @apply bg-[#1ebc4b];
+}
+
+#rhap_current-time,
+.rhap_time {
+  @apply text-white;
+}
+
+.rhap_main-controls-button svg,
+.rhap_button-clear svg {
+  @apply duration-75 text-[#1ebc4b] hover:text-[#158131];
+}
+
+.rhap_volume-controls {
+  @apply hidden md:flex;
 }

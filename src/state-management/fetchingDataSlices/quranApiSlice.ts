@@ -8,11 +8,25 @@ export const quranApiSlice = createApi({
     getReciters: builder.query<{ reciters: IReciter[] }, boolean>({
       query: (isEn) => `/reciters?language=${isEn ? "eng" : "ar"}`,
     }),
+    getReciterWithRewaya: builder.query<
+      { reciters: IReciter[] },
+      { isEn: boolean; rewayaId: number }
+    >({
+      query: ({ isEn, rewayaId }) =>
+        `/reciters?language=${isEn ? "eng" : "ar"}&&rewaya=${rewayaId}`,
+    }),
     getSuwar: builder.query<{ suwar: ISurah[] }, boolean>({
       query: (isEn) => `suwar?language=${isEn ? "eng" : "ar"}`,
     }),
     getRewayat: builder.query<{ riwayat: IRewaya[] }, boolean>({
       query: (isEn) => `riwayat?language=${isEn ? "eng" : "ar"}`,
+    }),
+    getReciter: builder.query<
+      { reciters: IReciter[] },
+      { isEn: boolean; reciterId: number }
+    >({
+      query: ({ isEn, reciterId }) =>
+        `reciters?language=${isEn ? "eng" : "ar"}&reciter=${reciterId}`,
     }),
   }),
 });
@@ -26,3 +40,9 @@ export const useGetSuwarQuery: QuranApiSlice["useGetSuwarQuery"] =
 
 export const useGetRewayatQuery: QuranApiSlice["useGetRewayatQuery"] =
   quranApiSlice.useGetRewayatQuery;
+
+export const useGetReciterQuery: QuranApiSlice["useGetReciterQuery"] =
+  quranApiSlice.useGetReciterQuery;
+
+export const useGetReciterWithRewayaQuery: QuranApiSlice["useGetReciterWithRewayaQuery"] =
+  quranApiSlice.useGetReciterWithRewayaQuery;

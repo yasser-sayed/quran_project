@@ -187,6 +187,14 @@ export interface IRewaya {
   name: string;
 }
 
+export interface IAudio {
+  id: number;
+  src: string;
+  img?: string;
+  name?: string;
+  writer?: string;
+}
+
 //network Error data
 
 export const arNetWorkErr: TPageNotFoundProps = {

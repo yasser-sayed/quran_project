@@ -84,6 +84,7 @@ const LogIn = () => {
       justifyContent={"center"}
       minH={["unset", "100vh"]}
       bgGradient="linear(to-b, third, main)"
+      className="col-span-full"
     >
       <Card
         as={Container}

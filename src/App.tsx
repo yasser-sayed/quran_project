@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import { setArLang } from "./state-management/settingsSlice/settingsSlice";
 import Reciter from "./pages/reciter/Reciter";
 import SoundPlayer from "./components/sound/SoundPlayer";
+import Search from "./pages/search/Search";
 
 const App = () => {
   const { user, userLoading } = useAppSelector((state) => state.userDet);
@@ -31,88 +32,93 @@ const App = () => {
     <Box bg={"main"} minH={"100vh"} color="white">
       <NavBar />
       {/* app routes */}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/reciter/:reciterId" element={<Reciter />} />
-        <Route
-          path="/login"
-          element={
-            userLoading ? (
-              <Loading divMinHight="100vh" loaderSize={20} />
-            ) : user ? (
-              <PageNotFound
-                heading={isEn ? "oops!" : "اوبس!"}
-                text={
-                  isEn
-                    ? "sorry you need to logout first"
-                    : "نأسف يجب عليك تسجيل الخروج اولا"
-                }
-              />
-            ) : (
-              <LogIn />
-            )
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            userLoading ? (
-              <Loading divMinHight="100vh" loaderSize={20} />
-            ) : user ? (
-              <PageNotFound
-                heading={isEn ? "oops!" : "اوبس!"}
-                text={
-                  isEn
-                    ? "sorry you need to logout first"
-                    : "نأسف يجب عليك تسجيل الخروج اولا"
-                }
-              />
-            ) : (
-              <SignUp />
-            )
-          }
-        />
-        <Route
-          path="/profile/:userId"
-          element={
-            userLoading ? (
-              <Loading divMinHight="100vh" loaderSize={20} />
-            ) : user ? (
-              <Profile />
-            ) : (
-              <PageNotFound
-                heading={isEn ? "oops!" : "اوبس!"}
-                text={
-                  isEn
-                    ? "sorry you need to login first"
-                    : "نأسف يجب عليك تسجيل الدخول اولا"
-                }
-              />
-            )
-          }
-        />
-        <Route
-          path="/favlist/:userId"
-          element={
-            userLoading ? (
-              <Loading divMinHight="100vh" loaderSize={20} />
-            ) : user ? (
-              <FavList />
-            ) : (
-              <PageNotFound
-                heading={isEn ? "oops!" : "اوبس!"}
-                text={
-                  isEn
-                    ? "sorry you need to login first"
-                    : "نأسف يجب عليك تسجيل الدخول اولا"
-                }
-              />
-            )
-          }
-        />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/*" element={<PageNotFound />} />
-      </Routes>
+
+      <div className="grid grid-cols-10">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/reciter/:reciterId" element={<Reciter />} />
+          <Route
+            path="/login"
+            element={
+              userLoading ? (
+                <Loading divMinHight="100vh" loaderSize={20} />
+              ) : user ? (
+                <PageNotFound
+                  heading={isEn ? "oops!" : "اوبس!"}
+                  text={
+                    isEn
+                      ? "sorry you need to logout first"
+                      : "نأسف يجب عليك تسجيل الخروج اولا"
+                  }
+                />
+              ) : (
+                <LogIn />
+              )
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              userLoading ? (
+                <Loading divMinHight="100vh" loaderSize={20} />
+              ) : user ? (
+                <PageNotFound
+                  heading={isEn ? "oops!" : "اوبس!"}
+                  text={
+                    isEn
+                      ? "sorry you need to logout first"
+                      : "نأسف يجب عليك تسجيل الخروج اولا"
+                  }
+                />
+              ) : (
+                <SignUp />
+              )
+            }
+          />
+          <Route
+            path="/profile/:userId"
+            element={
+              userLoading ? (
+                <Loading divMinHight="100vh" loaderSize={20} />
+              ) : user ? (
+                <Profile />
+              ) : (
+                <PageNotFound
+                  heading={isEn ? "oops!" : "اوبس!"}
+                  text={
+                    isEn
+                      ? "sorry you need to login first"
+                      : "نأسف يجب عليك تسجيل الدخول اولا"
+                  }
+                />
+              )
+            }
+          />
+          <Route
+            path="/favlist/:userId"
+            element={
+              userLoading ? (
+                <Loading divMinHight="100vh" loaderSize={20} />
+              ) : user ? (
+                <FavList />
+              ) : (
+                <PageNotFound
+                  heading={isEn ? "oops!" : "اوبس!"}
+                  text={
+                    isEn
+                      ? "sorry you need to login first"
+                      : "نأسف يجب عليك تسجيل الدخول اولا"
+                  }
+                />
+              )
+            }
+          />
+
+          <Route path="/search" element={<Search />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/*" element={<PageNotFound />} />
+        </Routes>
+      </div>
 
       {/* audio SoundPlayer */}
       {playList.length ? <SoundPlayer /> : ""}

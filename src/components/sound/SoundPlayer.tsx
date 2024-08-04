@@ -1,34 +1,32 @@
-import AudioPlayer, {
-  ActiveUI,
-  // InterfaceGridTemplateArea,
-  // PlayerPlacement,
-  // PlayListPlacement,
-  ProgressUI,
-  // VolumeSliderPlacement
-} from "react-modern-audio-player";
-// import { useState } from "react";
+import AudioPlayer from "react-h5-audio-player";
+import "react-h5-audio-player/lib/styles.css";
 import { Flex } from "@chakra-ui/react";
-import { useState } from "react";
-import { useAppSelector } from "../../state-management/hooks";
+import { useAppDispatch, useAppSelector } from "../../state-management/hooks";
+import { setAudioIndex } from "../../state-management/soundSlices/soundPlayerSlice";
+import Loading from "../Loading";
 
 const SoundPlayer = () => {
-  const [progressType] = useState<ProgressUI>("waveform");
-  // const [playerPlacement, setPlayerPlacement] = useState<PlayerPlacement>(
-  //   "bottom-left"
-  // );
-  // const [interfacePlacement, setInterfacePlacement] = useState<
-  // InterfaceGridTemplateArea
-  // >();
-  // const [playListPlacement, setPlayListPlacement] = useState<PlayListPlacement>(
-  //   "bottom"
-  // );
-  // const [volumeSliderPlacement, setVolumeSliderPlacement] = useState<
-  //   VolumeSliderPlacement
-  // >();
-  // const [theme, setTheme] = useState<"dark" | "light" | undefined>();
-  // const [width, setWidth] = useState("100%");
-  const [activeUI] = useState<ActiveUI>({ all: true });
-  const { playList } = useAppSelector((state) => state.soundPlayer);
+  const { playList, playingAudio, audioIndex } = useAppSelector(
+    (state) => state.soundPlayer
+  );
+  const dispatch = useAppDispatch();
+
+  const nextAudio = () => {
+    dispatch(setAudioIndex(audioIndex + 1));
+    if (audioIndex >= playList.length - 1) {
+      dispatch(setAudioIndex(0));
+    } else {
+      dispatch(setAudioIndex(audioIndex + 1));
+    }
+  };
+
+  const prevAudio = () => {
+    if (audioIndex < 1) {
+      dispatch(setAudioIndex(playList.length - 1));
+    } else {
+      dispatch(setAudioIndex(audioIndex - 1));
+    }
+  };
 
   return (
     <Flex
@@ -39,23 +37,16 @@ const SoundPlayer = () => {
       justifyContent={"center"}
     >
       <AudioPlayer
-        playList={playList}
-        activeUI={{
-          ...activeUI,
-          progress: progressType,
-        }}
-        // placement={{
-        //   player: playerPlacement,
-        //   interface: {
-        //     templateArea: interfacePlacement
-        //   },
-        //   playList: playListPlacement,
-        //   volumeSlider: volumeSliderPlacement
-        // }}
-        // rootContainerProps={{
-        //   colorScheme: theme,
-        //   width
-        // }}
+        onEnded={nextAudio}
+        defaultCurrentTime={<Loading divMinHight="unset" loaderSize={10} />}
+        defaultDuration={<Loading divMinHight="unset" loaderSize={10} />}
+        className="audioPlayer bg-[#101010]"
+        autoPlay
+        customAdditionalControls={[<p>{playingAudio?.name}</p>]}
+        src={playingAudio?.src}
+        onClickNext={nextAudio}
+        onClickPrevious={prevAudio}
+        showSkipControls
       />
     </Flex>
   );

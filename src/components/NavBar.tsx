@@ -28,13 +28,14 @@ import {
   getUser,
   unSetUser,
 } from "../state-management/userDetSlice/userDetSlice";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { unSetUserId } from "../state-management/userDetSlice/userLoginSlice";
 import Loading from "./Loading";
 import {
   setArLang,
   setEnLang,
 } from "../state-management/settingsSlice/settingsSlice";
+import { setNavH } from "../state-management/navBarSlice";
 
 const NavBar = () => {
   //lang modal state
@@ -89,9 +90,18 @@ const NavBar = () => {
     };
   }, [scrollY, scrollUp]);
 
+  //nav ref and height handler
+  const navRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (navRef.current) {
+      dispatch(setNavH(scrollUp ? navRef.current.clientHeight : 0));
+    }
+  }, [navRef.current?.clientHeight, scrollY]);
   return (
     <Flex
       as="nav"
+      ref={navRef}
       minH={"50px"}
       bg={"main"}
       alignItems={"center"}
@@ -102,7 +112,8 @@ const NavBar = () => {
       zIndex={999}
       flexWrap={"wrap"}
       rowGap={"1rem"}
-      top={scrollUp ? 0 : -24}
+      top={scrollUp ? 0 : -48}
+      // top={0}
       transitionDuration={"900ms"}
     >
       <Heading
