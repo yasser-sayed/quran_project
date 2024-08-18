@@ -15,6 +15,7 @@ import { setArLang } from "./state-management/settingsSlice/settingsSlice";
 import Reciter from "./pages/reciter/Reciter";
 import SoundPlayer from "./components/sound/SoundPlayer";
 import Search from "./pages/search/Search";
+import Radio from "./pages/radio/Radio";
 
 const App = () => {
   const { user, userLoading } = useAppSelector((state) => state.userDet);
@@ -114,7 +115,9 @@ const App = () => {
             }
           />
 
-          <Route path="/search" element={<Search />} />
+          <Route path="/search/" element={<Search />} />
+          <Route path="/radio" element={<Radio />} />
+          <Route path="/search/:srchVal" element={<Search />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/*" element={<PageNotFound />} />
         </Routes>

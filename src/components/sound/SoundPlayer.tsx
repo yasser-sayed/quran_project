@@ -4,6 +4,7 @@ import { Flex } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../state-management/hooks";
 import { setAudioIndex } from "../../state-management/soundSlices/soundPlayerSlice";
 import Loading from "../Loading";
+import { BounceLoader } from "react-spinners";
 
 const SoundPlayer = () => {
   const { playList, playingAudio, audioIndex } = useAppSelector(
@@ -37,9 +38,19 @@ const SoundPlayer = () => {
       justifyContent={"center"}
     >
       <AudioPlayer
+        showJumpControls={!playingAudio?.live}
         onEnded={nextAudio}
         defaultCurrentTime={<Loading divMinHight="unset" loaderSize={10} />}
-        defaultDuration={<Loading divMinHight="unset" loaderSize={10} />}
+        defaultDuration={
+          !playingAudio?.live ? (
+            <Loading divMinHight="unset" loaderSize={10} />
+          ) : (
+            <Flex alignItems={"center"} justifyContent={"center"} gap={2}>
+              <p>live</p>
+              <BounceLoader color="red" size={15} />
+            </Flex>
+          )
+        }
         className="audioPlayer bg-[#101010]"
         autoPlay
         customAdditionalControls={[<p>{playingAudio?.name}</p>]}

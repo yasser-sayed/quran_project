@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { IAudio, ISurah, TMoshaf } from "../../lib/types";
+import { IAudio, IRadio, ISurah, TMoshaf } from "../../lib/types";
 
 export interface ISoundPlayerInitialState {
   playList: IAudio[];
@@ -63,9 +63,30 @@ const soundPlayerSlice = createSlice({
       state.playingAudio = action.payload[0];
       state.audioIndex = 0;
     },
+
+    //set radio list
+    setRadioList: (state, action: PayloadAction<IRadio[]>) => {
+      let newPlayList = action.payload.map(
+        (radio): IAudio => ({
+          id: radio.id,
+          src: radio.url,
+          name: radio.name,
+          live: true,
+        })
+      );
+
+      state.playList = newPlayList;
+      state.playingAudio = newPlayList[0];
+      state.audioIndex = 0;
+    },
   },
 });
 
 export default soundPlayerSlice.reducer;
-export const { setPlayList, setPlayingAudio, setAudioIndex, setReadyPlayList } =
-  soundPlayerSlice.actions;
+export const {
+  setPlayList,
+  setPlayingAudio,
+  setAudioIndex,
+  setReadyPlayList,
+  setRadioList,
+} = soundPlayerSlice.actions;

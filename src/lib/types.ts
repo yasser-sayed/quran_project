@@ -193,6 +193,13 @@ export interface IAudio {
   img?: string;
   name?: string;
   writer?: string;
+  live?: boolean;
+}
+
+export interface IRadio {
+  id: number;
+  name: string;
+  url: string;
 }
 
 //network Error data

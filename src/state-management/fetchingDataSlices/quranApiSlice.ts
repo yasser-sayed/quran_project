@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IReciter, IRewaya, ISurah } from "../../lib/types";
+import { IRadio, IReciter, IRewaya, ISurah } from "../../lib/types";
 
 export const quranApiSlice = createApi({
   reducerPath: "quran api",
@@ -8,25 +8,36 @@ export const quranApiSlice = createApi({
     getReciters: builder.query<{ reciters: IReciter[] }, boolean>({
       query: (isEn) => `/reciters?language=${isEn ? "eng" : "ar"}`,
     }),
+
     getReciterWithRewaya: builder.query<
       { reciters: IReciter[] },
-      { isEn: boolean; rewayaId: number }
+      { isEn: boolean; rewayaId: number | null }
     >({
       query: ({ isEn, rewayaId }) =>
-        `/reciters?language=${isEn ? "eng" : "ar"}&&rewaya=${rewayaId}`,
+        `/reciters?language=${isEn ? "eng" : "ar"}${
+          rewayaId ? `&rewaya=${rewayaId}` : ""
+        }`,
     }),
+
     getSuwar: builder.query<{ suwar: ISurah[] }, boolean>({
       query: (isEn) => `suwar?language=${isEn ? "eng" : "ar"}`,
     }),
+
     getRewayat: builder.query<{ riwayat: IRewaya[] }, boolean>({
       query: (isEn) => `riwayat?language=${isEn ? "eng" : "ar"}`,
     }),
+
     getReciter: builder.query<
       { reciters: IReciter[] },
       { isEn: boolean; reciterId: number }
     >({
       query: ({ isEn, reciterId }) =>
         `reciters?language=${isEn ? "eng" : "ar"}&reciter=${reciterId}`,
+    }),
+
+    getRadios: builder.query<{ radios: IRadio[] }, boolean>({
+      query: (isEn) =>
+        ` https://mp3quran.net/api/v3/radios?language=${isEn ? "eng" : "ar"}`,
     }),
   }),
 });
@@ -46,3 +57,6 @@ export const useGetReciterQuery: QuranApiSlice["useGetReciterQuery"] =
 
 export const useGetReciterWithRewayaQuery: QuranApiSlice["useGetReciterWithRewayaQuery"] =
   quranApiSlice.useGetReciterWithRewayaQuery;
+
+export const useGetRadiosQuery: QuranApiSlice["useGetRadiosQuery"] =
+  quranApiSlice.useGetRadiosQuery;

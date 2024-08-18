@@ -142,6 +142,7 @@ const NavBar = () => {
         />
 
         <Box
+          // onChange={() => `)}
           bg={"third"}
           className="focus-within:w-[200px] md:focus-within:w-[450px]  p-3 md:p-5 overflow-hidden w-[40px] h-[40px] md:w-[400px] md:h-[40px] hover:w-[200px] md:hover:w-[450px]  shadow-[2px_2px_20px_rgba(0,0,0,0.08)] rounded-full flex group items-center hover:duration-300 duration-300"
         >
@@ -149,6 +150,7 @@ const NavBar = () => {
             <FaSearch className="md:text-lg lg:text-2xl" />
           </div>
           <input
+            onChange={(e) => navigate(`/search/${e.target.value}`)}
             type="text"
             placeholder={
               isEn ? "what do you want to listen?" : "ماذا تريد ان تسمع؟"

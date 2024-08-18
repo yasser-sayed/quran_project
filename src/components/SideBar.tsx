@@ -14,6 +14,13 @@ const SideBar = () => {
       >
         search
       </Link>
+
+      <Link
+        className="w-full p-3 hover:bg-gray-500 hover:bg-opacity-30"
+        to={"/radio"}
+      >
+        radio
+      </Link>
     </aside>
   );
 };
