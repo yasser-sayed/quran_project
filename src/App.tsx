@@ -7,7 +7,6 @@ import PageNotFound from "./pages/PageNotFound";
 import NavBar from "./components/NavBar";
 import { Box } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "./state-management/hooks";
-import FavList from "./pages/favList/FavList";
 import Settings from "./pages/settings/Settings";
 import Loading from "./components/Loading";
 import { useEffect } from "react";
@@ -16,9 +15,14 @@ import Reciter from "./pages/reciter/Reciter";
 import SoundPlayer from "./components/sound/SoundPlayer";
 import Search from "./pages/search/Search";
 import Radio from "./pages/radio/Radio";
+import { updateUser } from "./state-management/userDetSlice/userDetSlice";
+import LikedReciters from "./pages/likedReciters/LikedReciters";
+import PlayList from "./pages/playList/PlayList";
 
 const App = () => {
-  const { user, userLoading } = useAppSelector((state) => state.userDet);
+  const { user, userLoading, isUpdated } = useAppSelector(
+    (state) => state.userDet
+  );
   const { lang, isEn } = useAppSelector((state) => state.settings);
   const { playList } = useAppSelector((state) => state.soundPlayer);
   const dispatch = useAppDispatch();
@@ -28,6 +32,12 @@ const App = () => {
       dispatch(setArLang());
     }
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      dispatch(updateUser({ userId: user.id as string, updates: user }));
+    }
+  }, [isUpdated]);
 
   return (
     <Box bg={"main"} minH={"100vh"} color="white">
@@ -95,13 +105,34 @@ const App = () => {
               )
             }
           />
+
           <Route
-            path="/favlist/:userId"
+            path="/profile/:userId/likedreciters"
             element={
               userLoading ? (
                 <Loading divMinHight="100vh" loaderSize={20} />
               ) : user ? (
-                <FavList />
+                <LikedReciters />
+              ) : (
+                <PageNotFound
+                  heading={isEn ? "oops!" : "اوبس!"}
+                  text={
+                    isEn
+                      ? "sorry you need to login first"
+                      : "نأسف يجب عليك تسجيل الدخول اولا"
+                  }
+                />
+              )
+            }
+          />
+
+          <Route
+            path="/profile/:userId/playlist/:playListName"
+            element={
+              userLoading ? (
+                <Loading divMinHight="100vh" loaderSize={20} />
+              ) : user ? (
+                <PlayList />
               ) : (
                 <PageNotFound
                   heading={isEn ? "oops!" : "اوبس!"}

@@ -2,9 +2,15 @@ import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import { Flex } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../state-management/hooks";
-import { setAudioIndex } from "../../state-management/soundSlices/soundPlayerSlice";
+import {
+  fixPlayListIndexs,
+  setAudioIndex,
+} from "../../state-management/soundSlices/soundPlayerSlice";
 import Loading from "../Loading";
 import { BounceLoader } from "react-spinners";
+import { addLastPlayed } from "../../state-management/userDetSlice/userDetSlice";
+import { IAudio } from "../../lib/types";
+import { useEffect } from "react";
 
 const SoundPlayer = () => {
   const { playList, playingAudio, audioIndex } = useAppSelector(
@@ -28,6 +34,10 @@ const SoundPlayer = () => {
       dispatch(setAudioIndex(audioIndex - 1));
     }
   };
+
+  useEffect(() => {
+    dispatch(fixPlayListIndexs());
+  }, []);
 
   return (
     <Flex
@@ -58,6 +68,9 @@ const SoundPlayer = () => {
         onClickNext={nextAudio}
         onClickPrevious={prevAudio}
         showSkipControls
+        onCanPlay={() =>
+          !playingAudio?.live && dispatch(addLastPlayed(playingAudio as IAudio))
+        }
       />
     </Flex>
   );

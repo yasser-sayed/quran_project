@@ -24,9 +24,10 @@ const soundPlayerSlice = createSlice({
         suwar: ISurah[];
         img: string;
         name: string;
+        reciterId: number;
       }>
     ) => {
-      const { moshaf, suwar, img, name } = action.payload;
+      const { moshaf, suwar, img, name, reciterId } = action.payload;
 
       const surah_List = moshaf.surah_list.split(",");
 
@@ -37,6 +38,7 @@ const soundPlayerSlice = createSlice({
           img,
           name: suwar.find((sur) => sur.id === +surah)?.name,
           writer: name,
+          writerId: reciterId,
         })
       );
 
@@ -79,6 +81,12 @@ const soundPlayerSlice = createSlice({
       state.playingAudio = newPlayList[0];
       state.audioIndex = 0;
     },
+
+    //fix playList indexs
+    fixPlayListIndexs: (state) => {
+      let newPlayList = state.playList.map((item, i) => ({ ...item, id: i }));
+      state.playList = newPlayList;
+    },
   },
 });
 
@@ -89,4 +97,5 @@ export const {
   setAudioIndex,
   setReadyPlayList,
   setRadioList,
+  fixPlayListIndexs,
 } = soundPlayerSlice.actions;

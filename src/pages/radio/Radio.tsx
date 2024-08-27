@@ -75,6 +75,7 @@ const Radio = () => {
           <Flex flexDirection={"column"} p={2}>
             {data.radios.map((radio, index) => (
               <Flex
+                key={index}
                 w={"100%"}
                 rounded={"xl"}
                 p={4}

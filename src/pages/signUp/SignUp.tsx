@@ -54,9 +54,9 @@ const SignUp = () => {
               password: data.password,
               age: data.age,
               gender: data.gender,
-              favList: null,
-              lastPlayed: null,
-              playLists: null,
+              likedReciters: [],
+              lastPlayed: [],
+              playLists: {},
             })
           ).unwrap();
 

@@ -134,11 +134,15 @@ export const createSignUpSchema = (isEn: boolean) =>
 export type TLogInSchema = z.infer<ReturnType<typeof createLogInSchema>>;
 export type TSignUpSchema = z.infer<ReturnType<typeof createSignUpSchema>>;
 
-export type TPlayList = { name: string; shaykh: string[] };
-export type TFavList = null | string[];
-export type TLastPlayed = null | string[];
-export type TPlayLists = null | {
-  [key: string]: TPlayList;
+export interface IPlayList {
+  name: string;
+  desc: string;
+  list: IAudio[];
+}
+export type TLikedReciters = IReciter[];
+export type TLastPlayed = IAudio[];
+export type TPlayLists = {
+  [key: string]: IPlayList;
 };
 
 export interface User {
@@ -150,7 +154,7 @@ export interface User {
   password: string;
   age: number;
   gender: "male" | "female" | "other";
-  favList: TFavList;
+  likedReciters: TLikedReciters;
   playLists: TPlayLists;
   lastPlayed: TLastPlayed;
 }
@@ -193,6 +197,7 @@ export interface IAudio {
   img?: string;
   name?: string;
   writer?: string;
+  writerId?: number;
   live?: boolean;
 }
 

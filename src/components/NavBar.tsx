@@ -36,6 +36,7 @@ import {
   setEnLang,
 } from "../state-management/settingsSlice/settingsSlice";
 import { setNavH } from "../state-management/navBarSlice";
+import AlertMessage from "./AlertMessage";
 
 const NavBar = () => {
   //lang modal state
@@ -292,15 +293,16 @@ const NavBar = () => {
                 {isEn ? "Settings" : "الاعدادات"}
               </MenuItem>
               <MenuDivider color={"white"} />
-              <MenuItem
-                onClick={logOut}
-                bg={"third"}
-                color={"red"}
-                borderColor={"main"}
-                _hover={{ bg: "sec.600", color: "white" }}
-              >
-                {isEn ? "Log Out" : "تسجيل الخروج"}
-              </MenuItem>
+              <AlertMessage onClick={logOut} title="log out">
+                <MenuItem
+                  bg={"third"}
+                  color={"red"}
+                  borderColor={"main"}
+                  _hover={{ bg: "sec.600", color: "white" }}
+                >
+                  {isEn ? "Log Out" : "تسجيل الخروج"}
+                </MenuItem>
+              </AlertMessage>
             </MenuGroup>
           </MenuList>
         </Menu>

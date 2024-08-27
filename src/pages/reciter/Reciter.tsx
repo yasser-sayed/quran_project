@@ -31,9 +31,11 @@ import {
 } from "../../state-management/reciterSlice/reciterSlice";
 import ReciterListItem from "./components/ReciterListItem";
 import ReciterSearchBar from "./components/ReciterSearchBar";
+import LoveAnimation from "./../../components/LoveAnimation";
 
 const Reciter = () => {
   //redux distruct
+  const { user } = useAppSelector((state) => state.userDet);
   const { isEn } = useAppSelector((state) => state.settings);
   const { moshafType, suwarList, moshaf, reciter, searchOn, searchSuwarList } =
     useAppSelector((state) => state.reciter);
@@ -57,6 +59,7 @@ const Reciter = () => {
           img: recitersPhotos[reciter.id],
           name: reciter.name,
           suwar: suwarData.suwar,
+          reciterId: reciter.id,
         })
       );
     }
@@ -96,7 +99,7 @@ const Reciter = () => {
           className="col-span-full md:col-span-8"
           direction={"column"}
         >
-          {/* img and name section */}
+          {/* img, name and love section  */}
           <Flex
             p={8}
             alignItems="center"
@@ -120,6 +123,20 @@ const Reciter = () => {
                 {moshaf?.surah_total} {isEn ? "surah" : "سوره"} ({moshaf?.name})
               </Text>
             </Box>
+
+            {user ? (
+              <LoveAnimation
+                isLoved={
+                  !!user?.likedReciters.find(
+                    (favItem) => favItem.id === reciter.id
+                  )
+                }
+                reciter={reciter}
+                className="ms-auto"
+              />
+            ) : (
+              ""
+            )}
           </Flex>
 
           {/* play and moshaf type select */}

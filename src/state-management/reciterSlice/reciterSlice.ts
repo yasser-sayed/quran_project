@@ -29,9 +29,10 @@ const reciterSlice = createSlice({
         suwar: ISurah[];
         img: string;
         name: string;
+        reciterId: number;
       }>
     ) => {
-      const { suwar, img, name } = action.payload;
+      const { suwar, img, name, reciterId } = action.payload;
 
       const surah_List = state.moshaf?.surah_list.split(",");
 
@@ -42,6 +43,7 @@ const reciterSlice = createSlice({
           img,
           name: suwar.find((sur) => sur.id === +surah)?.name,
           writer: name,
+          writerId: reciterId,
         })
       );
 
