@@ -9,7 +9,7 @@ import { Box } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "./state-management/hooks";
 import Settings from "./pages/settings/Settings";
 import Loading from "./components/Loading";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { setArLang } from "./state-management/settingsSlice/settingsSlice";
 import Reciter from "./pages/reciter/Reciter";
 import SoundPlayer from "./components/sound/SoundPlayer";
@@ -20,6 +20,7 @@ import LikedReciters from "./pages/likedReciters/LikedReciters";
 import PlayList from "./pages/playList/PlayList";
 
 const App = () => {
+  //redux states
   const { user, userLoading, isUpdated } = useAppSelector(
     (state) => state.userDet
   );
@@ -27,6 +28,10 @@ const App = () => {
   const { playList } = useAppSelector((state) => state.soundPlayer);
   const dispatch = useAppDispatch();
 
+  //copmonent states
+  const [nrmlPageCols] = useState("9"); //normal page cols
+
+  //use effects
   useEffect(() => {
     if (lang === "ar") {
       dispatch(setArLang());
@@ -44,10 +49,13 @@ const App = () => {
       <NavBar />
       {/* app routes */}
 
-      <div className="grid grid-cols-10">
+      <div className="grid grid-cols-12">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/reciter/:reciterId" element={<Reciter />} />
+          <Route path="/" element={<Home cols={nrmlPageCols} />} />
+          <Route
+            path="/reciter/:reciterId"
+            element={<Reciter cols={nrmlPageCols} />}
+          />
           <Route
             path="/login"
             element={
@@ -92,7 +100,7 @@ const App = () => {
               userLoading ? (
                 <Loading divMinHight="100vh" loaderSize={20} />
               ) : user ? (
-                <Profile />
+                <Profile cols={nrmlPageCols} />
               ) : (
                 <PageNotFound
                   heading={isEn ? "oops!" : "اوبس!"}
@@ -112,7 +120,7 @@ const App = () => {
               userLoading ? (
                 <Loading divMinHight="100vh" loaderSize={20} />
               ) : user ? (
-                <LikedReciters />
+                <LikedReciters cols={nrmlPageCols} />
               ) : (
                 <PageNotFound
                   heading={isEn ? "oops!" : "اوبس!"}
@@ -132,7 +140,7 @@ const App = () => {
               userLoading ? (
                 <Loading divMinHight="100vh" loaderSize={20} />
               ) : user ? (
-                <PlayList />
+                <PlayList cols={nrmlPageCols} />
               ) : (
                 <PageNotFound
                   heading={isEn ? "oops!" : "اوبس!"}
@@ -146,9 +154,12 @@ const App = () => {
             }
           />
 
-          <Route path="/search/" element={<Search />} />
-          <Route path="/radio" element={<Radio />} />
-          <Route path="/search/:srchVal" element={<Search />} />
+          <Route path="/search/" element={<Search cols={nrmlPageCols} />} />
+          <Route path="/radio" element={<Radio cols={nrmlPageCols} />} />
+          <Route
+            path="/search/:srchVal"
+            element={<Search cols={nrmlPageCols} />}
+          />
           <Route path="/settings" element={<Settings />} />
           <Route path="/*" element={<PageNotFound />} />
         </Routes>

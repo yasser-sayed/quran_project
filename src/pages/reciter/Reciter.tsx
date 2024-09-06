@@ -9,7 +9,7 @@ import {
   Select,
   Text,
 } from "@chakra-ui/react";
-import SideBar from "../../components/SideBar";
+import SideBar from "../../components/sideBar/SideBar";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../state-management/hooks";
 import {
@@ -33,7 +33,7 @@ import ReciterListItem from "./components/ReciterListItem";
 import ReciterSearchBar from "./components/ReciterSearchBar";
 import LoveAnimation from "./../../components/LoveAnimation";
 
-const Reciter = () => {
+const Reciter = ({ cols }: { cols: string }) => {
   //redux distruct
   const { user } = useAppSelector((state) => state.userDet);
   const { isEn } = useAppSelector((state) => state.settings);
@@ -96,7 +96,7 @@ const Reciter = () => {
         <Flex
           minH={"100vh"}
           bg={"third"}
-          className="col-span-full md:col-span-8"
+          className={`col-span-full lg:col-span-${cols}`}
           direction={"column"}
         >
           {/* img, name and love section  */}

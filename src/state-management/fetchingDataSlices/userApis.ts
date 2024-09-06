@@ -42,6 +42,27 @@ export const addUser = createAsyncThunk<User, User, { rejectValue: string }>(
   }
 );
 
+export const deleteUser = createAsyncThunk<User, User, { rejectValue: string }>(
+  "userApis/deleteUser",
+  async (user, thunkApi) => {
+    const { rejectWithValue } = thunkApi;
+
+    try {
+      const data = await axios({
+        method: "delete",
+        url: `http://localhost:3000/users/${user.id}`,
+      });
+
+      return data.data;
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.message) {
+        return rejectWithValue(err.message);
+      }
+      return rejectWithValue("un expected error");
+    }
+  }
+);
+
 const userApisSlice = createSlice({
   name: "userApis",
   initialState,

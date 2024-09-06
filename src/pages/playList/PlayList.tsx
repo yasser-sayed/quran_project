@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import SideBar from "../../components/SideBar";
+import SideBar from "../../components/sideBar/SideBar";
 import PageNotFound from "../PageNotFound";
 import {
   Avatar,
@@ -16,7 +16,7 @@ import { setReadyPlayList } from "../../state-management/soundSlices/soundPlayer
 import { FaPlay } from "react-icons/fa6";
 import PlayListItem from "./components/PlayListItem";
 
-const PlayList = () => {
+const PlayList = ({ cols }: { cols: string }) => {
   const { userId, playListName } = useParams() as {
     userId: string;
     playListName: string;
@@ -38,7 +38,7 @@ const PlayList = () => {
         <Flex
           minH={"100vh"}
           bg={"third"}
-          className="col-span-full md:col-span-8"
+          className={`col-span-full lg:col-span-${cols}`}
           direction={"column"}
           gap={4}
         >
@@ -69,7 +69,7 @@ const PlayList = () => {
               </div>
             </Flex>
 
-            <PlayListMenu playList={playList}>
+            <PlayListMenu playList={user.playLists[playListName]}>
               <MenuButton
                 as={IconButton}
                 icon={

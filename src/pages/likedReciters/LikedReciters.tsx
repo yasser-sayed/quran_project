@@ -1,14 +1,14 @@
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../state-management/hooks";
 import PageNotFound from "../PageNotFound";
-import SideBar from "../../components/SideBar";
+import SideBar from "../../components/sideBar/SideBar";
 import { Flex, Heading, Text } from "@chakra-ui/react";
 import { FaHeart } from "react-icons/fa6";
 import ReciterCard from "../../components/ReciterCard";
 import AlertMessage from "./../../components/AlertMessage";
 import { clearLikedReciters } from "../../state-management/userDetSlice/userDetSlice";
 
-const LikedReciters = () => {
+const LikedReciters = ({ cols }: { cols: string }) => {
   const { userId } = useParams();
 
   const { isEn } = useAppSelector((state) => state.settings);
@@ -26,7 +26,7 @@ const LikedReciters = () => {
       <Flex
         minH={"100vh"}
         bg={"third"}
-        className="col-span-full md:col-span-8"
+        className={`col-span-full lg:col-span-${cols}`}
         direction={"column"}
         gap={4}
         py={8}

@@ -1,6 +1,6 @@
 import { Avatar, Box, Flex, Heading, Text } from "@chakra-ui/react";
 import Loading from "../../components/Loading";
-import SideBar from "../../components/SideBar";
+import SideBar from "../../components/sideBar/SideBar";
 import { IRadio, arNetWorkErr, enNetWorkErr } from "../../lib/types";
 import { useGetRadiosQuery } from "../../state-management/fetchingDataSlices/quranApiSlice";
 import { useAppDispatch, useAppSelector } from "../../state-management/hooks";
@@ -13,7 +13,7 @@ import {
 } from "../../state-management/soundSlices/soundPlayerSlice";
 import { motion } from "framer-motion";
 
-const Radio = () => {
+const Radio = ({ cols }: { cols: string }) => {
   const { isEn } = useAppSelector((state) => state.settings);
 
   const { isFetching, isError, data } = useGetRadiosQuery(isEn);
@@ -39,7 +39,7 @@ const Radio = () => {
         <Flex
           minH={"100vh"}
           bg={"third"}
-          className="col-span-full md:col-span-8"
+          className={`col-span-full lg:col-span-${cols}`}
           direction={"column"}
         >
           {/* img and radio desc section */}

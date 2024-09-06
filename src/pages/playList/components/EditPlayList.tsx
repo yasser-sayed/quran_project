@@ -14,7 +14,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import {
   useAppDispatch,
   useAppSelector,
@@ -60,6 +60,10 @@ const EditPlayList = ({ children, playList }: IEditPlayListProps) => {
       onClose();
     }
   };
+
+  useEffect(() => {
+    setNewPlayList(playList);
+  }, [playList]);
 
   return (
     <>

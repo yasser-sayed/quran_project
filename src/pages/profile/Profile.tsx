@@ -1,22 +1,53 @@
-import { Avatar, Flex, Heading, IconButton, Text } from "@chakra-ui/react";
-import { Link, useParams } from "react-router-dom";
-import { MdOutlineEdit } from "react-icons/md";
-import SideBar from "../../components/SideBar";
-import { useAppSelector } from "../../state-management/hooks";
+import { Avatar, Flex, Heading, Text, useToast } from "@chakra-ui/react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import SideBar from "../../components/sideBar/SideBar";
+import { useAppDispatch, useAppSelector } from "../../state-management/hooks";
 import PageNotFound from "../PageNotFound";
 import AudioCard from "../../components/AudioCard";
 import { useEffect, useState } from "react";
-import { IAudio } from "../../lib/types";
-import { FaCirclePlay, FaHeart, FaList } from "react-icons/fa6";
+import { IAudio, User } from "../../lib/types";
+import { FaCirclePlay, FaHeart, FaList, FaTrash } from "react-icons/fa6";
 import ReciterCard from "../../components/ReciterCard";
+import AlertMessage from "./../../components/AlertMessage";
+import { deleteUser } from "../../state-management/fetchingDataSlices/userApis";
+import { unSetUser } from "../../state-management/userDetSlice/userDetSlice";
+import { unSetUserId } from "../../state-management/userDetSlice/userLoginSlice";
 
-const Profile = () => {
+const Profile = ({ cols }: { cols: string }) => {
   const { userId } = useParams();
 
   const [lastPlayedList, setlastPlayedList] = useState<IAudio[]>([]);
 
   const { isEn } = useAppSelector((state) => state.settings);
   const { user } = useAppSelector((state) => state.userDet);
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const toast = useToast();
+
+  const deleteAccount = (user: User) => {
+    // delete user function
+    dispatch(deleteUser(user));
+
+    // remove user from redux
+    dispatch(unSetUser());
+
+    //remove user id
+    dispatch(unSetUserId());
+
+    //toast done message
+    toast({
+      title: isEn ? "user deleted successfully." : "تم حذف المستخدم بنجاحز",
+      description: isEn
+        ? "We've deleted your account successfully."
+        : "لقد قمنا بحذف حسابك بنجاح.",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
+
+    navigate("/");
+  };
 
   useEffect(() => {
     if (user) {
@@ -37,11 +68,11 @@ const Profile = () => {
         <Flex
           minH={"100vh"}
           bg={"third"}
-          className="col-span-full md:col-span-8"
+          className={`col-span-full lg:col-span-${cols}`}
           direction={"column"}
           gap={4}
         >
-          {/* img and radio desc section */}
+          {/* img and delete account section */}
           <Flex
             p={8}
             alignItems="center"
@@ -72,17 +103,12 @@ const Profile = () => {
             </Flex>
 
             <div>
-              <IconButton
-                as={Link}
-                to={`/profile/${user?.id}/edit`}
-                icon={<MdOutlineEdit className="text-4xl" />}
-                variant={"ghost"}
-                rounded={9999}
-                colorScheme="whiteAlpha"
-                color={"white"}
-                p={3}
-                aria-label="Options"
-              />
+              <AlertMessage
+                title="delete your account"
+                onClick={() => deleteAccount(user)}
+              >
+                <FaTrash className="text-2xl cursor-pointer hover:text-red-700 text-red-500" />
+              </AlertMessage>
             </div>
           </Flex>
 

@@ -1,5 +1,5 @@
 import { Flex, FormControl, FormLabel, Select } from "@chakra-ui/react";
-import SideBar from "../../components/SideBar";
+import SideBar from "../../components/sideBar/SideBar";
 import { useAppSelector } from "../../state-management/hooks";
 import { useParams } from "react-router-dom";
 import NoValSearch from "./components/NoValSearch";
@@ -14,7 +14,7 @@ import { IReciter, arNetWorkErr, enNetWorkErr } from "../../lib/types";
 import { useEffect, useState } from "react";
 import ReciterCard from "../../components/ReciterCard";
 
-const Search = () => {
+const Search = ({ cols }: { cols: string }) => {
   //search value from params
   const { srchVal } = useParams();
 
@@ -95,7 +95,7 @@ const Search = () => {
           <Flex
             minH={"100vh"}
             bg={"third"}
-            className="col-span-full md:col-span-8"
+            className={`col-span-full lg:col-span-${cols}`}
             direction={"column"}
             p={8}
           >

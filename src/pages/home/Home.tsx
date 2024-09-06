@@ -2,15 +2,20 @@ import { Box, Flex, Tab, TabList, TabPanels, Tabs } from "@chakra-ui/react";
 import { useAppSelector } from "../../state-management/hooks";
 import HomeAll from "./components/HomeAll";
 import HomeRewayat from "./components/HomeRewayat";
-import SideBar from "../../components/SideBar";
+import SideBar from "../../components/sideBar/SideBar";
 
-const Home = () => {
+const Home = ({ cols }: { cols: string }) => {
   const { isEn } = useAppSelector((state) => state.settings);
 
   return (
     <>
       <SideBar />
-      <Box bg="third" py={6} px={4} className="col-span-full md:col-span-8">
+      <Box
+        bg="third"
+        py={6}
+        px={4}
+        className={`col-span-full lg:col-span-${cols}`}
+      >
         <Tabs variant="soft-rounded" colorScheme="sec">
           <TabList color={"white"}>
             <Tab color={"white"}>{isEn ? "all" : "الكل"}</Tab>

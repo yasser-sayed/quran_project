@@ -10,14 +10,6 @@ import {
   MenuGroup,
   MenuItem,
   MenuList,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  useDisclosure,
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaHome, FaSearch } from "react-icons/fa";
@@ -31,17 +23,13 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { unSetUserId } from "../state-management/userDetSlice/userLoginSlice";
 import Loading from "./Loading";
-import {
-  setArLang,
-  setEnLang,
-} from "../state-management/settingsSlice/settingsSlice";
 import { setNavH } from "../state-management/navBarSlice";
 import AlertMessage from "./AlertMessage";
+import ChooseLang from "./ChooseLang";
+import SideBarDrawer from "./sideBar/SideBarDrawer";
+import { BsList } from "react-icons/bs";
 
 const NavBar = () => {
-  //lang modal state
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
   //scroll states
   const [scrollY, setScrollY] = useState(0);
   const [scrollUp, setScrollUp] = useState(true);
@@ -117,15 +105,31 @@ const NavBar = () => {
       // top={0}
       transitionDuration={"900ms"}
     >
-      <Heading
-        as={Link}
-        to="/"
-        size={["sm", "sm", "md", "md", "lg", "lg"]}
-        className="hover:scale-105"
-        fontFamily={"inherit"}
-      >
-        {isEn ? "quran" : "قرأن"}
-      </Heading>
+      <Flex gap={2} alignItems={"center"}>
+        {/* sidebar button on phone screen */}
+
+        <SideBarDrawer>
+          <IconButton
+            variant={"text"}
+            aria-label={isEn ? "side bar" : "القائمه"}
+            className="hover:bg-opacity-50 hover:bg-gray-400 !rounded-full lg:!hidden"
+            icon={
+              <BsList className="cursor-pointer text-2xl  !justify-self-end" />
+            }
+          />
+        </SideBarDrawer>
+
+        {/* app logo */}
+        <Heading
+          as={Link}
+          to="/"
+          size={["sm", "sm", "md", "md", "lg", "lg"]}
+          className="hover:scale-105"
+          fontFamily={"inherit"}
+        >
+          {isEn ? "quran" : "قرأن"}
+        </Heading>
+      </Flex>
 
       {/* search bar */}
 
@@ -163,59 +167,18 @@ const NavBar = () => {
 
       {/* choose lang  */}
 
-      <Button
-        variant="ghost"
-        color={"white"}
-        rounded={999}
-        colorScheme="whiteAlpha"
-        leftIcon={<IoLanguage />}
-        onClick={onOpen}
-      >
-        {isEn ? "English" : "العربيه"}
-      </Button>
-
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent bg={"third"} color={"white"}>
-          <ModalHeader>{isEn ? "choose language" : "اختار اللغه"}</ModalHeader>
-          <ModalCloseButton
-            left={isEn ? "unset" : 2}
-            right={isEn ? 2 : "unset"}
-          />
-          <ModalBody>
-            <Button
-              variant="ghost"
-              color={"white"}
-              rounded={999}
-              colorScheme="whiteAlpha"
-              w={"100%"}
-              onClick={() => {
-                dispatch(setArLang()), onClose();
-              }}
-            >
-              {isEn ? "Arabic" : "العربيه"}
-            </Button>
-            <Button
-              variant="ghost"
-              color={"white"}
-              rounded={999}
-              colorScheme="whiteAlpha"
-              w={"100%"}
-              onClick={() => {
-                dispatch(setEnLang()), onClose();
-              }}
-            >
-              {isEn ? "English" : "الانجليزيه"}
-            </Button>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="sec" mr={3} onClick={onClose}>
-              {isEn ? "Close" : "اغلاق"}
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <ChooseLang>
+        <Button
+          className="!hidden md:!inline-flex"
+          variant="ghost"
+          color={"white"}
+          rounded={999}
+          colorScheme="whiteAlpha"
+          leftIcon={<IoLanguage />}
+        >
+          {isEn ? "English" : "العربيه"}
+        </Button>
+      </ChooseLang>
 
       {/* login user loading */}
 
